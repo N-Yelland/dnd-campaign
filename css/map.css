@@ -2,8 +2,8 @@
 #map-region {
     background-color: #e7eff2;
     
-    margin: 50px;
-    height: calc(100vh - 100px);
+    margin: 2.5vw;
+    height: calc(100vh - 5vw);
     position: relative;
 
     overflow: hidden;
