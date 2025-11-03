@@ -1,0 +1,104 @@
+
+#map-region {
+    background-color: #e7eff2;
+    
+    margin: 50px;
+    height: calc(100vh - 100px);
+    position: relative;
+
+    overflow: hidden;
+
+    cursor: crosshair;
+}
+
+#map-region img {
+    pointer-events: none;
+    position: absolute;
+
+    z-index: 0;
+    aspect-ratio: initial;
+}
+
+#map-region:active {
+    cursor: crosshair;
+}
+
+#pos-data {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#pos-data div {
+    color: white;
+    display: inline-block;
+    font-family: monospace;
+}
+
+.map-obj {
+    position: absolute;
+    aspect-ratio: initial;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+
+    font-family: "IM Fell English SC", serif;
+    font-weight: 400;
+    line-height: 1em;
+
+    text-shadow:.05em .05em .05em rgb(136, 136, 136);
+
+    text-overflow: clip;
+    text-align: center;
+
+    white-space: nowrap;
+    user-select: none;
+
+    /* border: solid 2px red; */
+}
+
+.map-obj.water, .map-obj.river {
+    color: #0e2841;
+    font-family: "IM Fell English", serif;
+    font-style: italic;
+    
+    text-shadow: none;
+}
+
+.map-obj.major-region, .map-obj.region, .map-obj.minor-region {
+    text-align: center;
+    letter-spacing: 0.35em;
+    line-height: 1;
+    text-shadow: 0 0 0.2em #ffffff, 0 0 0.4em #ffffff, 0 0 0.8em #ffffff;
+}
+
+.map-obj.map-obj .top-text {
+    display: block;
+    font-size: 0.61em;
+}
+
+.map-obj.city {
+    text-decoration: underline;
+    text-decoration-thickness: 0.05em;
+}
+
+.large-lc-text {
+    font-size: 1.25em;
+    font-weight: normal;
+    pointer-events: none;
+}
+
+#labels {
+    border: solid blue;
+
+    position: absolute;
+
+    z-index: 0;
+    aspect-ratio: initial;
+
+    container-type: size;
+}
+
+.map-obj[data-link]:hover {
+    cursor: pointer;
+    color: rgb(187, 14, 14);
+}
