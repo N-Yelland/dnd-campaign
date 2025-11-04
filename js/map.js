@@ -1,4 +1,6 @@
 
+// init vars
+
 var mouse_down = false;
 
 var cursor_x = 0;
@@ -6,6 +8,8 @@ var cursor_y = 0;
 
 var map_x = 0;
 var map_y = 0;
+
+// constants
 
 const map = $("#map");
 
@@ -61,6 +65,8 @@ const decimal_precision = 5;
 
 const boundary_threshold = 10;
 
+// On Load things...
+
 const aspect_ratio = map.height() / map.width();
 
 const region_width = $("#map-region").width();
@@ -87,6 +93,32 @@ var zoom = 200;
 var prev_zoom = localStorage.getItem("zoom");
 if (prev_zoom) {
     zoom = parseFloat(prev_zoom);
+}
+
+var selected_info = localStorage.getItem("selected_info");
+if (selected_info) {
+    load_into_infobox(selected_info);
+}
+
+// ---
+
+function load_into_infobox(src) {
+    fetch(src).then(response => {
+        return response.text();
+    }).then(data => {
+        var hash = src.split("#")[1];
+        if (hash) {
+            var content = $(data).find(`#${hash}`).html();
+        } else {
+            var content = data;
+        }
+        $("#infobox .content").html(content);
+        
+        $("#infobox h1").enlargeLowerCase();
+        $("#infobox").addSmartQuotes()
+
+        $("#infobox").removeClass("hidden");
+    })
 }
 
 function get_map_coords(x, y) {
@@ -205,14 +237,6 @@ setInterval(function () {
         $("#zoom-level").html(`Zoom: ${zoom}%`);
         localStorage.setItem("zoom", String(zoom));
 
-        // $(".map-obj.major-region").css({
-        //     opacity: sigmoid(zoom, 450, -150)
-        // })
-
-        // $(".map-obj.region").css({
-        //     opacity: sigmoid(zoom, 500, -150)
-        // })
-        
     }
 }, 200)
 
@@ -236,10 +260,10 @@ $.getJSON("data.json", function (data) {
         x: 0.5 * region_width - 0.53800 * init_height * zoom * 0.01 / aspect_ratio,
         y: 0.5 * region_height - 0.30749 * init_height * zoom * 0.01
     }
-    // var prev_map_xy = localStorage.getItem("map_xy");
-    // if (prev_map_xy) {
-    //     init_map_pos = JSON.parse(prev_map_xy);
-    // }
+    var prev_map_xy = localStorage.getItem("map_xy");
+    if (prev_map_xy) {
+        init_map_pos = JSON.parse(prev_map_xy);
+    }
 
     $("#map, #labels").css({
         height: init_height * zoom * 0.01,
@@ -349,25 +373,14 @@ $.getJSON("data.json", function (data) {
     // add on-click handling...
 
     $("[data-link]").on("click", function (e) {
-        var url = $(this).attr("data-link");
-        fetch(`source/${url}`).then(response => { return response.text(); })
-            .then(data => {
-                var hash = url.split("#")[1];
-                if (hash) {
-                    var content = $(data).find(`#${hash}`).html();
-                } else {
-                    var content = data;
-                }
-                $("#infobox .content").html(content);
-                $("#infobox h1").enlargeLowerCase();
-                $("#infobox").removeClass("hidden");
-
-                $("#infobox").addSmartQuotes()
-            })
+        var url = "source/" + $(this).attr("data-link");
+        load_into_infobox(url);
+        localStorage.setItem("selected_info", url);
     })
 
     $("#infobox .close-btn").on("click", function () {
         $("#infobox").addClass("hidden");
+        localStorage.removeItem("selected_info")
     })
 });
 

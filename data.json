@@ -329,13 +329,16 @@
             "text": "Worton",
             "position": [0.40108, 0.19764],
             "type": "village",
-            "label_offset": "below"
+            "label_offset": "below",
+            "link": "valley_of_lem.html#worton"
         },
         {
             "text": "Nim's Hollow",
             "position": [0.37537, 0.19816],
             "type": "village",
-            "label_offset": "left"
+            "label_offset": "left",
+            "link": "valley_of_lem.html#nims-hollow"
+
         },
         {
             "text": "Temple of the \\ Ruby Chalice",
@@ -349,13 +352,15 @@
             "position": [0.39701, 0.14977],
             "type": "village",
             "label_offset": [50, -50],
-            "align": "left"
+            "align": "left",
+            "link": "valley_of_lem.html#grimstead-on-the-lem"
         },
         {
             "text": "Tarras",
             "position": [0.39394, 0.09949],
             "type": "ruin",
-            "label_offset": "right"
+            "label_offset": "right",
+            "link": "valley_of_lem.html#tarras"
         },
         {
             "text": "The Erranite Mts.",
