@@ -19,6 +19,11 @@
     aspect-ratio: initial;
 }
 
+#map, #labels {
+    /* transition: transform 0.05s;  */
+    transform-origin: 0 0;
+}
+
 #map-region:active {
     cursor: crosshair;
 }
@@ -52,6 +57,8 @@
 
     white-space: nowrap;
     user-select: none;
+
+    transition: opacity 0.1s;
 
     /* border: solid 2px red; */
 }

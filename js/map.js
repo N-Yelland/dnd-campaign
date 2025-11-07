@@ -26,11 +26,11 @@ const type_data = {
     },
     "region": {
         size: 9.5,
-        fade_out_at: 500
+        fade_out_at: 6
     },
     "major-region": {
         size: 17,
-        fade_out_at: 450
+        fade_out_at: 4.5
     },
     "minor-region": {
         size: 5
@@ -52,7 +52,7 @@ const type_data = {
     "village": {
         size: 4.5,
         icon: "town",
-        fade_in_at: 400
+        fade_in_at: 4.0
     },
     "water": {
         size: 9.5
@@ -89,11 +89,11 @@ if (region_height / region_width < 1) {
 
 const init_height = map.height();
 
-var zoom = 200;
-var prev_zoom = localStorage.getItem("zoom");
-if (prev_zoom) {
-    zoom = parseFloat(prev_zoom);
-}
+var zoom = 1.0;
+// var prev_zoom = localStorage.getItem("zoom");
+// if (prev_zoom) {
+//     zoom = parseFloat(prev_zoom);
+// }
 
 var selected_info = localStorage.getItem("selected_info");
 if (selected_info) {
@@ -160,7 +160,7 @@ $.fn.updateCurvature = function () {
         var curvature = $(this).attr("data-curvature");
         if (curvature) {
             $(this).arctext("set", {
-                radius: (1 / Math.abs(curvature)) * zoom * 0.01,
+                radius: (1 / Math.abs(curvature)) * zoom,
                 dir: Math.sign(curvature),
                 animation: "200ms linear"});
         }
@@ -179,66 +179,72 @@ $.fn.updateRotation = function () {
     });
 }
 
-var prev_zoom = 0;
-setInterval(function () {
-    if (Math.abs(zoom - prev_zoom) >= 10) {
+// var prev_zoom = 0;
+// setInterval(function () {
+//     if (Math.abs(zoom - prev_zoom) >= 10) {
 
-        var h = init_height * zoom * 0.01;
-        var w = init_height * zoom * 0.01 / aspect_ratio;
-        var H = $("#map-region").height();
-        var W = $("#map-region").width();
-        if (h < H || w < W) {
-            zoom = prev_zoom
-            return;
-        }
+//         var h = init_height * zoom * 0.01;
+//         var w = init_height * zoom * 0.01 / aspect_ratio;
+//         var H = $("#map-region").height();
+//         var W = $("#map-region").width();
+//         if (h < H || w < W) {
+//             zoom = prev_zoom
+//             return;
+//         }
 
-        prev_zoom = zoom;
-        var sf = init_height * zoom * 0.01 / map.height();
+//         prev_zoom = zoom;
+//         var sf = init_height * zoom * 0.01 / map.height();
 
-        var top = bound(
-            cursor_y - sf * (cursor_y - map.position().top),
-            H - h + boundary_threshold,
-            -boundary_threshold
-        )
-        var left = bound(
-            cursor_x - sf * (cursor_x - map.position().left),
-            W - w + boundary_threshold,
-            -boundary_threshold
-        )
+//         var top = bound(
+//             cursor_y - sf * (cursor_y - map.position().top),
+//             H - h + boundary_threshold,
+//             -boundary_threshold
+//         )
+//         var left = bound(
+//             cursor_x - sf * (cursor_x - map.position().left),
+//             W - w + boundary_threshold,
+//             -boundary_threshold
+//         )
 
-        $("#map, #labels").animate({
-            height: h,
-            width: w,
-            top: top,
-            left: left
-        }, {smoothing: "linear", duration: 200});
+//         $("#map, #labels").css({
+//             transition: "transform 200ms",
+//             transform: `scale(${zoom/100})`
+//         });
 
-        $("[data-curvature]").updateCurvature();
 
-        $("[data-rotation]").updateRotation();
+//         // $("#map, #labels").animate({
+//         //     height: h,
+//         //     width: w,
+//         //     top: top,
+//         //     left: left
+//         // }, {smoothing: "linear", duration: 200});
 
-        for (const [type, data] of Object.entries(type_data)) {
-            if (data.fade_out_at) {
-                $(`.${type}`).css("opacity", sigmoid(zoom, data.fade_out_at, -150))
-            }
-            if (data.fade_in_at) {
-                $(`.${type}`).css("opacity", sigmoid(zoom, data.fade_in_at, 150))
-            }
+//         // $("[data-curvature]").updateCurvature();
 
-            $(`.${type}`).each(function () {
-                if ($(this).css("opacity") <= 0.01) {
-                    $(this).hide();
-                } else {
-                    $(this).show();
-                }
-            })
-        }
+//         // $("[data-rotation]").updateRotation();
 
-        $("#zoom-level").html(`Zoom: ${zoom}%`);
-        localStorage.setItem("zoom", String(zoom));
+//         // for (const [type, data] of Object.entries(type_data)) {
+//         //     if (data.fade_out_at) {
+//         //         $(`.${type}`).css("opacity", sigmoid(zoom, data.fade_out_at, -150))
+//         //     }
+//         //     if (data.fade_in_at) {
+//         //         $(`.${type}`).css("opacity", sigmoid(zoom, data.fade_in_at, 150))
+//         //     }
 
-    }
-}, 200)
+//         //     $(`.${type}`).each(function () {
+//         //         if ($(this).css("opacity") <= 0.01) {
+//         //             $(this).hide();
+//         //         } else {
+//         //             $(this).show();
+//         //         }
+//         //     })
+//         // }
+
+//         $("#zoom-level").html(`Zoom: ${zoom}%`);
+//         localStorage.setItem("zoom", String(zoom));
+
+//     }
+// }, 200)
 
 $.fn.enlargeLowerCase = function () {
     return this.each(function () {
@@ -257,8 +263,8 @@ $.getJSON("data.json", function (data) {
 
     // inital location has Brightwater at the centre
     var init_map_pos = {
-        x: 0.5 * region_width - 0.53800 * init_height * zoom * 0.01 / aspect_ratio,
-        y: 0.5 * region_height - 0.30749 * init_height * zoom * 0.01
+        x: 0.5 * region_width - 0.53800 * init_height * zoom / aspect_ratio,
+        y: 0.5 * region_height - 0.30749 * init_height * zoom
     }
     var prev_map_xy = localStorage.getItem("map_xy");
     if (prev_map_xy) {
@@ -266,10 +272,10 @@ $.getJSON("data.json", function (data) {
     }
 
     $("#map, #labels").css({
-        height: init_height * zoom * 0.01,
-        width: init_height * zoom * 0.01 / aspect_ratio,
-        top: init_map_pos.y,
-        left: init_map_pos.x
+        height: init_height * zoom,
+        width: init_height * zoom / aspect_ratio,
+        top: 0,// init_map_pos.y,
+        left:0// init_map_pos.x
     });
 
     // create and position label elements
@@ -332,6 +338,7 @@ $.getJSON("data.json", function (data) {
 
         if (object.rotation) {
             obj_div.attr("data-rotation", object.rotation);
+            obj_div.updateRotation();
         }
 
         if (object.spacing) {
@@ -416,15 +423,16 @@ function handle_cursor_move(e) {
             y_offset = cursor_y - prev_y
 
             var map_pos = map.position();
-            if (
+            if ( true || (
                 map_pos.top + y_offset <= -boundary_threshold &&
                 map_pos.left + x_offset <= -boundary_threshold &&
                 map_pos.top + map.height() + y_offset >= $("#map-region").height() + boundary_threshold &&
                 map_pos.left + map.width() + x_offset >= $("#map-region").width() + boundary_threshold
-            ) {
+            )) {
+                tx += x_offset / zoom;
+                ty += y_offset / zoom;
                 $("#map, #labels").css({
-                    top: "+=" + y_offset,
-                    left: "+=" + x_offset
+                    transform: `scale(${zoom}) translate(${tx}px, ${ty}px)`
                 });
             }
         }
@@ -435,6 +443,61 @@ function handle_cursor_move(e) {
         localStorage.setItem("map_xy", JSON.stringify(get_screen_coords(0,0)));
     }
 }
+
+/** Adjust map scale/position to the new zoom level, keeping the specified origin fixed on the 
+ * screen.
+ * @param {float} new_zoom New zoom level, where 1.0 = 100%
+ * @param {float} origin_x x coord of zoom origin in px, relative to initial position of map.
+ * @param {*} origin_y similarly, y coord.
+ */
+function handle_zoom(new_zoom, origin_x, origin_y) {
+
+    const x = origin_x / zoom - tx;
+    const y = origin_y / zoom - ty;
+
+    const new_tx = (zoom / new_zoom - 1) * x + (zoom/new_zoom) * tx;
+    const new_ty = (zoom / new_zoom - 1) * y + (zoom/new_zoom) * ty; 
+
+    $("#map, #labels").css({
+        transform: `scale(${new_zoom}) translate(${new_tx}px, ${new_ty}px)`
+    });
+
+    zoom = new_zoom;
+    tx = new_tx;
+    ty = new_ty;
+
+    // Adjust map features based on zoom level...
+    for (const [type, data] of Object.entries(type_data)) {
+        if (data.fade_out_at) {
+            $(`.${type}`).css("opacity", sigmoid(zoom, data.fade_out_at, -2))
+        }
+        if (data.fade_in_at) {
+            $(`.${type}`).css("opacity", sigmoid(zoom, data.fade_in_at, 2))
+        }
+
+        $(`.${type}`).each(function () {
+            if ($(this).css("opacity") <= 0.01) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        })
+    }
+
+    // TODO: scale down objects at large zoom
+    // if (zoom > 6) {
+    //     $(".map-obj").css({"font-size": "0.5em"});
+    // }
+
+    $("#zoom-level").html(`Zoom: ${(zoom * 100).toFixed(0)}%`);
+    localStorage.setItem("zoom", String(zoom));
+}
+
+let tx = 0;
+let ty = 0;
+
+const ZOOM_TICK = 1.12;
+
 
 $("#labels").on({
     "mousemove": handle_cursor_move,
@@ -464,12 +527,16 @@ $("#labels").on({
     },
 
     "wheel": function (e) {
-        // disable simultaneous scroll + zoom
-        if (!mouse_down) {
-            var delta = e.originalEvent.deltaY;
-            zoom = zoom - 0.1 * delta;
-            localStorage.setItem("map_xy", JSON.stringify(get_screen_coords(0,0)));
-        }
+
+        e.preventDefault()
+
+        const px = e.originalEvent.pageX - $("#map-region").offset().left;
+        const py = e.originalEvent.pageY - $("#map-region").offset().top;
+
+        const zoom_direction = (e.originalEvent.deltaY > 0) ? -1 : 1;
+        const new_zoom = zoom * Math.pow(ZOOM_TICK, zoom_direction);
+
+        handle_zoom(new_zoom, px, py)
     },
 
     "touchmove": function (e) {
