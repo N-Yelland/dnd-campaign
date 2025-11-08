@@ -1,0 +1,20 @@
+
+[project]
+name = "codex"
+version = "0.1.0"
+description = "A Sphinx HTML theme for the Codex project."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "sphinx>=4.0"
+]
+
+[project.entry-points."sphinx.html_themes"]
+name_of_theme = "codex"
+
+[tool.setuptools.package-data]
+"codex" = ["theme.conf", "static/**", "templates/**"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,3 @@
+[theme]
+inherit = "basic"
+stylesheets = ["main.css"]

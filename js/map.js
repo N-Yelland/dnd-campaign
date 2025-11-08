@@ -289,7 +289,7 @@ $(document).ready(function () {
 
         // add on-click handling...
         $("[data-link]").on("click", function (e) {
-            var url = "source/" + $(this).attr("data-link");
+            var url = "source_old/" + $(this).attr("data-link");
             load_into_infobox(url);
             localStorage.setItem("selected_info", url);
         })
