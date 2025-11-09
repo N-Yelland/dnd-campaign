@@ -67,3 +67,20 @@ h3 {
 [role=navigation] {
     display: none;
 }
+
+a.headerlink {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.4s;
+
+    color: #75755c;
+    padding-left: 5pt;
+
+    font-weight: normal;
+    text-decoration: none;
+}
+
+*:hover > a.headerlink {
+    position: relative;
+    opacity: 1;
+}

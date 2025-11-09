@@ -30,5 +30,8 @@ exclude_patterns = []
 sys.path.append(str(Path('../codex').resolve()))
 
 extensions = ['codex']
-html_theme = 'codex'
 html_static_path = ['_static']
+
+# For speed, we disable these featuers:
+html_use_index = False
+html_additional_pages = {}
