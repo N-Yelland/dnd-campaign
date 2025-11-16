@@ -32,15 +32,10 @@ jobs:
           python-version: "3.14"
 
       - name: Create virtual environment and install dependencies
-        run: |
-          uv venv
-          uv pip install codex/
+        run: uv pip install codex/
 
       - name: Build Sphinx documentation
-        run: |
-          source .venv/bin/activate
-          ls .venv/lib/python3.14/site-packages/codex
-          sphinx-build -b html source build
+        run: uv run sphinx-build -b html source build
 
       - name: Upload arficact for GitHub Pages
         uses: actions/upload-pages-artifact@v4
