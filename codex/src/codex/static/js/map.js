@@ -63,20 +63,25 @@ function load_into_infobox(src) {
         return response.text();
     }).then(data => {
         const hash = escaped_src.split("#")[1];
-        var classes = null;
+        var classes;
+        var content;
         if (hash) {
-            const content = $(data).find(`#${hash}`).html();
+            content = $(data).find(`#${hash}`).html();
             classes = $(data).find(`#${hash}`).attr("class");
         } else {
-            var content = data;
+            content = data;
         }
+
+        console.log(content);
         $("#infobox .content").html(content);
+        // pass target classes to content div
         if (classes) {
-            $("#infobox .content").attr("class", classes);
+            $("#infobox .content")
+                .removeClass()
+                .addClass("content " + classes);
         }
         
         $("#infobox h2").enlargeLowerCase();
-        // $("#infobox").addSmartQuotes()
 
         // change link to send user to original source
         $("#infobox a.headerlink").attr({
