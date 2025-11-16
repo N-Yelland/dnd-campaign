@@ -32,7 +32,9 @@ jobs:
           python-version: "3.14"
 
       - name: Create virtual environment and install dependencies
-        run: uv pip install codex/
+        run: |
+          uv venv
+          uv pip install codex/
 
       - name: Build Sphinx documentation
         run: uv run sphinx-build -b html source build
