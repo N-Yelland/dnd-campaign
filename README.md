@@ -26,3 +26,4 @@ sphinx-build -b html source build
 - Populate content
 - Add map controls (e.g.: manual zoom, reset view, scale of px:miles)
 - Style navigation elements
+- Make zoom smoother on mobile

@@ -42,10 +42,13 @@ var py = read_local_float("py", 0);
 var alt_tx;
 var alt_ty;
 
+// Variable to store initial separation of touch points in pinch-zoom
+var last_separation = null;
 
-function updatePosition() {
-    alt_tx = tx + ((1 - zoom)/zoom) * (px - cursor_x);
-    alt_ty = ty + ((1 - zoom)/zoom) * (py - cursor_y);
+
+function update_position(x, y) {
+    alt_tx = tx + ((1 - zoom)/zoom) * (px - x);
+    alt_ty = ty + ((1 - zoom)/zoom) * (py - y);
 
     $(".moveable").css({
         top: ty,
@@ -59,76 +62,124 @@ function updatePosition() {
 }
 
 
+function move_cursor(x, y) {
+    // Drag objects
+    if (mouse_down) {
+        if (prev_x) {
+            x_offset = x - prev_x
+            y_offset = y - prev_y
+
+            tx += x_offset;
+            ty += y_offset;
+
+            px += x_offset;
+            py += y_offset;
+        }
+        prev_x = x;
+        prev_y = y;
+    }
+
+    update_position(x, y);
+}
+
+
+function adjust_zoom(x, y, z) {
+    px = x;
+    py = y;
+    tx = alt_tx;
+    ty = alt_ty;
+
+    const origin_x = px - tx - $(".container").offset().left;
+    const origin_y = py - ty - $(".container").offset().top;
+
+    update_position(px, py);
+
+    $(".scalable").css({
+        "transform-origin": `${origin_x}px ${origin_y}px`,
+        "transform": `scale(${z})`
+    });
+
+    $(document).trigger("changeZoom");
+
+    localStorage.setItem("zoom", z);
+    localStorage.setItem("origin_x", origin_x);
+    localStorage.setItem("origin_y", origin_y);
+}
+
+
 $(document).ready(function () {
 
     /* CURSOR EVENT HANDLING */
     
     $(".container").on({
         "mousemove": function (e) {
-            cursor_x = e.pageX;
-            cursor_y = e.pageY;
+            move_cursor(e.pageX, e.pageY);
+        },
 
-            // Drag objects
-            if (mouse_down) {
-                if (prev_x) {
-                    x_offset = cursor_x - prev_x
-                    y_offset = cursor_y - prev_y
-
-                    tx += x_offset;
-                    ty += y_offset;
-
-                    px += x_offset;
-                    py += y_offset;
-                }
-                prev_x = cursor_x;
-                prev_y = cursor_y;
+        "touchmove": function (e) {
+            const touches = e.originalEvent.touches;
+            if (touches.length > 2) {
+                // We only handle single and double touches...
+                return
             }
+            e.preventDefault();
+            if (touches.length == 1) {
+                // drag map
+                move_cursor(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
+            } else {
+                // adjust zoom
+                const x1 = touches[0].pageX;
+                const y1 = touches[0].pageY;
+                const x2 = touches[1].pageX;
+                const y2 = touches[1].pageY;
 
-            updatePosition();
+                const separation = Math.hypot(x2 - x1, y2 - y1);
+
+                if (last_separation !== null) {
+                    const zoom_factor = separation / last_separation;
+                    zoom *= zoom_factor;
+
+                    const mx = (x1 + x2) / 2;
+                    const my = (y1 + y2) / 2;
+
+                    adjust_zoom(mx, my, zoom);
+                }
+
+                last_separation = separation;
+            }
         },
 
         "mousedown": function (e) {
             mouse_down = true;
-
             prev_x = e.pageX;
             prev_y = e.pageY;
+        },
+
+        "touchstart": function (e) {
+            mouse_down = true;
+            prev_x = e.originalEvent.touches[0].pageX;
+            prev_y = e.originalEvent.touches[0].pageY;
         },
 
         "mouseup": function (e) {
             mouse_down = false;
         },
 
+        "touchend touchcancel": function (e) {
+            mouse_down = false;
+            const touches = e.originalEvent.touches;
+            if (touches.length < 2) {
+                last_separation = null;
+            }
+        },
+
         "wheel": function (e) {
             e.preventDefault()
 
             const zoom_direction = (e.originalEvent.deltaY > 0) ? -1 : 1;
-            const new_zoom = zoom * Math.pow(ZOOM_TICK, zoom_direction);
-            zoom = new_zoom;
+            zoom *= Math.pow(ZOOM_TICK, zoom_direction);
 
-            px = e.originalEvent.pageX;
-            py = e.originalEvent.pageY;
-
-            tx = alt_tx;
-            ty = alt_ty;
-
-            const origin_x = px - tx - $(this).offset().left;
-            const origin_y = py - ty - $(this).offset().top;
-
-            updatePosition();
-
-            $(".scalable").css({
-                "transform-origin": `${origin_x}px ${origin_y}px`,
-                "transform": `scale(${new_zoom})`
-            });
-
-            $(document).trigger("changeZoom");
-
-            localStorage.setItem("zoom", new_zoom);
-            localStorage.setItem("tx", tx);
-            localStorage.setItem("ty", ty);
-            localStorage.setItem("origin_x", origin_x);
-            localStorage.setItem("origin_y", origin_y);
-
+            adjust_zoom(e.originalEvent.pageX, e.originalEvent.pageY, zoom);
         }
     });
 
