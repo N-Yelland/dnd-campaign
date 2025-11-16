@@ -87,3 +87,9 @@ a.headerlink {
     position: relative;
     opacity: 1;
 }
+
+.footer[role=contentinfo] {
+    color: #75755c;
+    text-align: center;
+    margin-bottom: 5px;
+}

@@ -144,7 +144,7 @@ function update_opacity() {
         }
 
         obj.each(function () {
-            if ($(this).css("opacity") <= 0.05) {
+            if ($(this).css("opacity") <= 0.1) {
                 $(this).hide();
             } else {
                 $(this).show();

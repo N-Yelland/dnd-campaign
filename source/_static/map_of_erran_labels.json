@@ -5,12 +5,6 @@
         "type": "feature"
     },
     {
-        "name": "Vilras",
-        "coords": [0.26042, 0.15315],
-        "type": "ruin",
-        "label_offset": "left"
-    },
-    {
         "name": "R. Ranathar",
         "coords": [0.253, 0.18726],
         "type": "river",
