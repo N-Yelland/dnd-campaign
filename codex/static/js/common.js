@@ -5,8 +5,8 @@ $.fn.enlargeLowerCase = function () {
         children.remove();
         $(this).remove(children);
         
-        var html = $(this).html();
-        html = html.replace(/([a-z]+)/g, "<span class=\"large-lc-text\">$1</span>");
+        var text = $(this).text();
+        html = text.replace(/([a-z]+)/g, "<span class=\"large-lc-text\">$1</span>");
         $(this).html(html);
         
         $(this).append(children);

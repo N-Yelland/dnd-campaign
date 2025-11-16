@@ -1,0 +1,317 @@
+[
+    {
+        "name": "Mt. Ereg",
+        "coords": [0.38868, 0.04293],
+        "type": "feature"
+    },
+    {
+        "name": "Vilras",
+        "coords": [0.26042, 0.15315],
+        "type": "ruin",
+        "label_offset": "left"
+    },
+    {
+        "name": "R. Ranathar",
+        "coords": [0.253, 0.18726],
+        "type": "river",
+        "label_curvature": -0.03,
+        "label_rotation": -20
+    },
+    {
+        "name": "Ranakhan",
+        "coords": [0.25378, 0.23418],
+        "type": "ruin",
+        "label_offset": "above"
+    },
+    {
+        "top_text": "The Great",
+        "name": "Blightwood",
+        "coords": [0.35533, 0.17706],
+        "type": "major-region",
+        "label_curvature": 0.003,
+        "label_rotation": -5
+    },
+    {
+        "name": "The Old Watchtower",
+        "coords": [0.37291, 0.14205],
+        "type": "landmark",
+        "label_offset": "above"
+    },
+    {
+        "name": "R. Lem",
+        "coords": [0.38507, 0.215],
+        "type": "river",
+        "label_curvature": 0.04,
+        "label_rotation": 70
+    },
+    {
+        "name": "Valley of Lem",
+        "coords": [0.40535, 0.25312],
+        "type": "region",
+        "label_curvature": -0.006,
+        "label_rotation": 25
+    },
+    {
+        "name": "Pass of Shadows",
+        "coords": [0.34827, 0.25862],
+        "type": "minor-region",
+        "label_curvature": -0.01,
+        "label_rotation": -10
+    },
+    {
+        "name": "The Grimpeaks",
+        "coords": [0.40274, 0.33487],
+        "type": "region",
+        "label_curvature": 0.01,
+        "label_rotation": 70
+    },
+    {
+        "name": "Taluras",
+        "coords": [0.35161, 0.38211],
+        "type": "ruin",
+        "label_offset": "left"
+    },
+    {
+        "name": "Shathari Isl.",
+        "coords": [0.29128, 0.51293],
+        "type": "minor-region",
+        "label_curvature": -0.01,
+        "label_rotation": 45,
+        "spacing": 0.5
+    },
+    {
+        "name": "Sparrowhill",
+        "coords": [0.43656, 0.49110],
+        "type": "town",
+        "label_offset": "below"
+    },
+    {
+        "name": "Spearhead Cliffs",
+        "coords": [0.49823, 0.53269],
+        "type": "minor-region",
+        "label_curvature": -0.007,
+        "label_rotation": -20,
+        "spacing": 0.5
+    },
+    {
+        "name": "Klathras",
+        "coords": [0.54331, 0.46000],
+        "type": "city",
+        "label_offset": "above"
+    },
+    {
+        "top_text": "Bay of",
+        "name": "Tears",
+        "coords": [0.54883, 0.51427],
+        "type": "water"
+    },
+    {
+        "top_text": "Sea of",
+        "name": "Thosk",
+        "coords": [0.71211, 0.45722],
+        "type": "water"
+    },
+    {
+        "name": "Tower",
+        "coords": [0.59616, 0.51079],
+        "type": "landmark",
+        "label_offset": "above"
+    },
+    {
+        "name": "Murne",
+        "coords": [0.67028, 0.37213],
+        "type": "town",
+        "label_offset": "right"
+    },
+    {
+        "name": "Fairenfell",
+        "coords": [0.57410, 0.39846],
+        "type": "town",
+        "label_offset": "right"
+    },
+    {
+        "name": "R. Murnowline",
+        "coords": [0.629, 0.398],
+        "type": "river",
+        "label_curvature": 0.01,
+        "label_rotation": -30
+    },
+    {
+        "name": "Lake \\ Vossar",
+        "coords": [0.55368, 0.33202],
+        "type": "river"
+    },
+    {
+        "name": "Brightwater",
+        "coords": [0.53800, 0.30749],
+        "type": "city",
+        "label_offset": "above"
+    },
+    {
+        "name": "Mullick",
+        "coords": [0.43469, 0.30473],
+        "type": "town",
+        "label_offset": "right"
+    },
+    {
+        "name": "R. Fastburne",
+        "coords": [0.43449, 0.29137],
+        "type": "river",
+        "label_curvature": 0.02,
+        "label_rotation": -10
+    },
+    {
+        "name": "Millhold",
+        "coords": [0.50204, 0.21531],
+        "type": "town",
+        "label_offset": "below left"
+    },
+    {
+        "name": "R. Sloburne",
+        "coords": [0.48806, 0.23669],
+        "type": "river",
+        "label_curvature": 0.03,
+        "label_rotation": -60
+    },
+    {
+        "name": "R. Telling",
+        "coords": [0.48319, 0.18475],
+        "type": "river",
+        "label_curvature": -0.02,
+        "label_rotation": -30
+    },
+    {
+        "name": "Telfirth",
+        "coords": [0.49152, 0.15952],
+        "type": "town",
+        "label_offset": "above"
+    },
+    {
+        "name": "Belgonaz",
+        "coords": [0.62450, 0.13405],
+        "type": "city",
+        "label_offset": "below"
+    },
+    {
+        "name": "Drayford",
+        "coords": [0.63439, 0.19049],
+        "type": "town",
+        "label_offset": "below"
+    },
+    {
+        "name": "Fort Ashwood",
+        "coords": [0.71733, 0.20136],
+        "type": "landmark",
+        "label_offset": "left",
+        "align": "right"
+    },
+    {
+        "name": "Fairenford",
+        "coords": [0.65443, 0.28138],
+        "type": "city",
+        "label_offset": "above"
+    },
+    {
+        "name": "R. Fairen",
+        "coords": [0.63761, 0.31147],
+        "type": "river",
+        "label_curvature": -0.02,
+        "label_rotation": -10
+    },
+    {
+        "name": "R. Fairen",
+        "coords": [0.55483, 0.38569],
+        "type": "river",
+        "label_curvature": -0.01,
+        "label_rotation": 40
+    },
+    {
+        "name": "R. Dray",
+        "coords": [0.64169, 0.24477],
+        "type": "river",
+        "label_curvature": 0.02,
+        "label_rotation": 25
+    },
+    {
+        "name": "Port Rallian",
+        "coords": [0.74546, 0.39170],
+        "type": "city",
+        "label_offset": "above"
+    },
+    {
+        "name": "Murnish Hills",
+        "coords": [0.69108, 0.34978],
+        "type": "region",
+        "label_curvature": -0.003,
+        "label_rotation": -10
+    },
+    {
+        "top_text": "The",
+        "name": "Plains",
+        "coords": [0.598, 0.35427],
+        "type": "major-region",
+        "label_curvature": 0.004,
+        "label_rotation": 20,
+        "spacing": 0.2
+    },
+    {
+        "name": "Pass of Lights",
+        "coords": [0.72578, 0.28193],
+        "type": "minor-region",
+        "label_curvature": -0.012,
+        "label_rotation": -15,
+        "spacing": 0.4
+    },
+    {
+        "name": "Olor",
+        "coords": [0.72931, 0.29388],
+        "type": "town",
+        "label_offset": "right"
+    },
+    {
+        "name": "Immarel",
+        "coords": [0.76752, 0.24909],
+        "type": "city",
+        "label_offset": "right"
+    },
+    {
+        "name": "Pelaris",
+        "coords": [0.79503, 0.27962],
+        "type": "town",
+        "label_offset": "above"
+    },
+    {
+        "name": "Astmon",
+        "coords": [0.85587, 0.18480],
+        "type": "town",
+        "label_offset": "right"
+    },
+    {
+        "top_text": "Gulf of",
+        "name": "Dreams",
+        "coords": [0.85456, 0.28328],
+        "type": "water"
+    },
+    {
+        "top_text": "The Elven",
+        "name": "Groves",
+        "coords": [0.79282, 0.20962],
+        "type": "major-region",
+        "label_curvature": 0.002,
+        "label_rotation": -10
+    },
+    {
+        "name": "Temple of the Ruby Chalice",
+        "coords": [0.43765, 0.12181],
+        "type": "landmark",
+        "label_offset": [60, 60],
+        "align": "left"
+    },
+    {
+        "name": "The Erranite Mts.",
+        "coords": [0.52897, 0.06157],
+        "type": "region",
+        "label_curvature": -0.003,
+        "label_rotation": 10
+    }
+]

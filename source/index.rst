@@ -14,4 +14,5 @@ A 5.5e D&D Homebrew Campaign, set on the Blighted Continent of Erran.
    :glob:
 
    prologue
+   map
    locations/*

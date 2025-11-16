@@ -6,7 +6,8 @@ description = "A Sphinx HTML theme for the Codex project."
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "sphinx>=4.0"
+    "sphinx>=4.0",
+    "sphinxcontrib-jquery"
 ]
 
 [project.entry-points."sphinx.html_themes"]

@@ -1,5 +1,7 @@
 import sys
+
 from pathlib import Path
+
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -29,8 +31,10 @@ exclude_patterns = []
 
 sys.path.append(str(Path('../codex').resolve()))
 
-extensions = ['codex']
 html_static_path = ['_static']
+
+extensions = ['codex']
+
 
 # For speed, we disable these featuers:
 html_use_index = False

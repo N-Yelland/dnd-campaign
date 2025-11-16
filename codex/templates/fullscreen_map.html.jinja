@@ -1,0 +1,48 @@
+
+{% extends "!layout.html" %}
+{% block title %}Map of Locations{% endblock %}
+
+{# --- Disable sidebar, navbars, breadcrumbs, etc. --- #}
+{% block sidebars %}{% endblock %}
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block searchbox %}{% endblock %}
+{% block rootrellink %}{% endblock %}
+
+{% block linktags %}
+    <link rel="stylesheet" href="_static/css/style.css"></link>
+    <link rel="stylesheet" href="_static/css/map.css"></link>
+    <link rel="stylesheet" href="_static/css/info.css"></link>
+    {{ super() }}
+{% endblock %}
+
+{% block body %}
+<div id="map-region">
+    <div class="container">
+        <div class="moveable">
+            <div class="scalable">
+                <img id="map" class="map-img" src="{{ image }}">
+                <div id="labels"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="infobox" class="hidden">
+        <div class="content">
+            <p><i>Click on a location to find out more...</i></p>
+        </div>
+        <div class="close-btn">Close</div>
+    </div>
+</div>
+
+<div id="pos-data">
+    <div id="current-coords"></div>
+    <div id="zoom-level" style="color:rgb(94, 41, 94)"></div>
+    <div id="last-click" style="color:rgb(100, 89, 28)"></div>
+</div>
+
+<script type="text/javascript" src="_static/js/jquery.arctext.js"></script>
+<script type="text/javascript" src="_static/js/pan_zoom.js"></script>
+<script type="text/javascript" src="_static/js/map.js"></script>
+{% endblock %}

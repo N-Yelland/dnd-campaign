@@ -16,9 +16,15 @@
             width: 100%;
         }
 
+        #outer {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
         #container {
             margin: 2.5vw;
-            height: calc(100vh - 5vw);
+            flex-grow: 1;
             background-color: gray;
 
             position: relative;
@@ -57,18 +63,29 @@
             pointer-events: none;
         }
 
+        #outer {
+            background-color: rgb(154, 214, 214);
+        }
+
     </style>
 </head>
 <body>
     
-    <div id="container">
-        <div id="moveable">
-            <div id="scalable">
-                content
-            </div>
-        </div>
-        <div id="ghost">
+    More content
+    <div style="height: 500px;"></div>
 
+    </div>
+    <div id="coords" style="font-family: monospace;">---</div>
+    <div id="outer">
+        <div id="container">
+            <div id="moveable">
+                <div id="scalable">
+                    content
+                </div>
+            </div>
+            <div id="ghost">
+
+            </div>
         </div>
     </div>
 
@@ -107,6 +124,7 @@
 
         $("#container").on({
             "mousemove": function (e) {
+
                 cursor_x = e.pageX;
                 cursor_y = e.pageY;
 
@@ -127,8 +145,6 @@
                 }
 
                 updatePosition();
-
-                console.log(px, py)
             },
 
             "mousedown": function (e) {
@@ -143,12 +159,18 @@
             },
 
             "wheel": function (e) {
+                e.preventDefault()
+                if (e.target == this) {
+                    return
+                }
                 const zoom_direction = (e.originalEvent.deltaY > 0) ? -1 : 1;
                 const new_zoom = zoom * Math.pow(ZOOM_TICK, zoom_direction);
                 zoom = new_zoom;
 
-                px = e.originalEvent.clientX
-                py = e.originalEvent.clientY
+                px = e.originalEvent.pageX;
+                py = e.originalEvent.pageY;
+
+                $("#coords").html(`(${px}, ${py})`);
 
                 tx = alt_tx;
                 ty = alt_ty;
