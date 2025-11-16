@@ -43,3 +43,6 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: build/
+
+      - name: Deploy GitHub Pages site
+        uses: actions/deploy-pages@v4.0.5
