@@ -38,7 +38,8 @@ jobs:
 
       - name: Build Sphinx documentation
         run: |
-          uv run sphinx-build -b html source build
+          source .venv/bin/activate
+          sphinx-build -b html source build
 
       - name: Upload arficact for GitHub Pages
         uses: actions/upload-pages-artifact@v4
