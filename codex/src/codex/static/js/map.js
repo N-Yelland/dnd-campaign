@@ -340,12 +340,21 @@ $(document).ready(function () {
 
     $("#zoom-in-button").on("click", function () {
         zoom *= Math.pow(ZOOM_TICK, 2);
+        update_position($(document).width()/2, $(document).height()/2);
         adjust_zoom($(document).width()/2, $(document).height()/2, zoom);
     });
 
     $("#zoom-out-button").on("click", function () {
         zoom *= Math.pow(ZOOM_TICK, -2);
+        update_position($(document).width()/2, $(document).height()/2);
         adjust_zoom($(document).width()/2, $(document).height()/2, zoom);
+    });
+
+    $("#home-button").on("click", function () {
+        zoom = $("#map-region").width() / $("#map").width();
+        alt_tx = 0;
+        alt_ty = 0;
+        adjust_zoom($("#map-region").offset().left, $("#map-region").offset().top, zoom);
     });
 
     update_opacity();

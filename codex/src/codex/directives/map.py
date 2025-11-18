@@ -56,6 +56,10 @@ class map_node(nodes.General, nodes.Element):
                     <div id="zoom-out-button" class="map-control-button" title="Zoom Out">
                         <img class="button-icon" src="_static/img/control_icons/zoom_out.svg">
                     </div>
+
+                    <div id="home-button" class="map-control-button" title="Recenter">
+                        <img class="button-icon" src="_static/img/control_icons/home.svg">
+                    </div>
                 </div>
         """
         ht.body.append(html)
