@@ -46,9 +46,8 @@ def update_context(app: Sphinx, pagename, _templatename, context: dict[str, Any]
     metadata = app.builder.env.metadata.get(pagename, {})
     if "_codex_map_data" not in metadata:
         return
-    
     logger.info(f"{pagename} contains a map directive...")
-    # TODO: add JS/CSS to context...
+
     css_files: list[_CascadingStyleSheet] = context.setdefault("css_files", [])
     js_files: list[_JavaScript] = context.setdefault("script_files", [])
 

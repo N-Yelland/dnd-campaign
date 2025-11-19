@@ -240,7 +240,7 @@ function add_map_object(object) {
         obj_div.attr("data-link", `${object.docname}.html#${object.id}`);
     }
 
-    // TODO: Implement label offsets with translate(x, y)
+    // TODO: Improve how label offsets work.
 
     if (object.label_offset) {
         var x_shift = -50, y_shift = -50;

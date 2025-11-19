@@ -5,7 +5,7 @@
 
 body, div.body {
     max-width: 1000px;
-    /* TODO: Map should be wider than other pages. */
+    /* TODO: Improve how map sizing is handled */
 }
 
 .body[role=main] {
