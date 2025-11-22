@@ -12,7 +12,7 @@ from sphinx.builders.html._assets import _CascadingStyleSheet, _JavaScript
 from codex.directives import LocationDirective, MapDirective, map_node
 
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 logger = logging.getLogger(__name__)
 
