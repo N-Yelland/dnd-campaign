@@ -1,4 +1,4 @@
-
+/*
 html {
     background-color: rgb(46, 45, 42);
 }
@@ -102,64 +102,341 @@ a.headerlink {
     background-color: #f0f0e5;
 }
 
-div.sphinxsidebar {
-    float: none;
-    margin: 0;
+/* manuscript style? */
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(-100%, 0);
-    display: block;
-
-    text-align: right;
+body {
+  margin: 0;
+  padding: 0;
+  background: #e3d3b0; /* parchment base */
+  color: #2b1f13;
+  font-family: "IM Fell English", "Georgia", "Times New Roman", serif;
 }
 
-div.sphinxsidebarwrapper {
-    padding: 0;
+/* Subtle parchment texture using gradients (no images needed) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.35), transparent 60%),
+    radial-gradient(circle at 80% 0%, rgba(255,255,255,0.2), transparent 55%),
+    radial-gradient(circle at 50% 100%, rgba(0,0,0,0.08), transparent 65%);
+  mix-blend-mode: multiply;
+  opacity: 0.8;
+  z-index: -1;
 }
 
-div.sphinxsidebar [role=heading] {
-    display: none;
+/* Main document layout: like a framed page on parchment */
+.document {
+  max-width: 1100px;
+  margin: 2.5rem auto;
+  padding: 2rem 2rem;
+  /* background: rgba(247, 235, 205, 0.96); */
+  border-radius: 4px;
+  border: 2px solid #7c5b32;
+  box-shadow:
+    0 0 0 4px rgba(81, 54, 26, 0.8),
+    0 20px 50px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
-div.sphinxsidebar a {
-    box-sizing: border-box;
-    position: relative;
-    z-index: 0;
+/* Decorative inner border to mimic illuminated manuscript margins */
+.document::before {
+  content: "";
+  position: absolute;
+  top: 1.1rem;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  border: 1px solid rgba(84, 50, 25, 0.5);
+  border-radius: 2px;
+  pointer-events: none;
+}
 
-    margin-bottom: 10px;
-    display: block;
+/* Slightly narrow content column like a column of text */
+.body {
+  max-width: 600px !important;
+  min-width: 0 !important;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+/* ==== Navigation bar made to look like a wooden / leather tab ==== */
+
+.related {
+  background: linear-gradient(to bottom, #5b3b1e, #3b2615);
+  border-bottom: 3px solid #2a180c;
+  color: #f7e6c4;
+  font-family: "IM Fell English SC", "IM Fell English", serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}
+
+.related h3 {
+  display: none; /* hide default label */
+}
+
+.related ul {
+  margin: 0;
+  padding: 0.3rem 1.5rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.related li {
+  font-size: 0.85rem;
+}
+
+.related a {
+  color: #f7e6c4;
+  text-decoration: none;
+  padding: 0.15rem 0.4rem;
+}
+
+.related a:hover {
+  text-decoration: underline;
+}
+
+.related a:visited {
+  color: #f7e6c4;
+}
+
+/* Breadcrumb arrows like small ornaments */
+.related .nav-item-0 a::after,
+.related .nav-item-1 a::after {
+  content: "";
+}
+
+/* ==== Sidebar styled as a margin gloss ==== */
+
+/* Sort out margins...*/
+.documentwrapper {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* ==== Headings: illuminated & calligraphic ==== */
+
+h1, h2, h3, h4, h5 {
+  font-family: "IM Fell English SC", "IM Fell English", serif;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  color: #3a1f10;
+  margin-top: 2.2rem;
+  margin-bottom: 0.6rem;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: 2.2rem;
+  text-align: center;
+  position: relative;
+  padding: 0 10%;
+}
+
+/* Decorative flourish lines around main title */
+h1::before,
+h1::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 10%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #5c3720, transparent);
+}
+
+h1::before {
+  left: 0;
+}
+
+h1::after {
+  right: 0;
+}
+
+/* Small medieval symbol next to permalinks */
+.headerlink {
+  text-decoration: none;
+  margin-left: 0.3rem;
+  font-size: 0.85rem;
+  color: #7c1b1b;
+}
+
+.headerlink:hover {
+  color: #b53d3d;
+}
+
+.large-lc-text {
+    font-size: 1.25em;
+    font-weight: normal;
+    pointer-events: none;
+}
+
+h2 {
+  font-size: 1.75em;
+  margin-bottom: 0;
+  line-height: normal;
+}
+
+.location h2 + p {
+    font-family: "IM Fell English SC", "IM Fell English", serif;
+    font-weight: normal;
+    text-transform: lowercase;
+    color: #75755c;
+    font-size: 1.5em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    text-indent: 0;
+}
+
+/* ==== Manuscript paragraph styling ==== */
+
+.body p {
+  text-indent: 1.5em;
+  margin: 0.5rem 0;
+}
+
+.body li p {
+  text-indent: 0;
+}
+
+/* Remove indent on first paragraph under each section */
+section > p:first-of-type {
+  text-indent: 0;
+}
+
+/* Drop cap on very first paragraph of the page */
+section#prologue > p:first-of-type::first-letter {
+  float: left;
+  font-size: 3.4rem;
+  line-height: 0.9;
+  padding-right: 0.2em;
+  padding-top: 0.12em;
+  font-family: "IM Fell English SC", serif;
+  color: #7c1b1b;
+}
+
+/* Horizontal rule styled like a quill stroke */
+hr.docutils {
+  border: none;
+}
+
+hr::before {
+  content: "* * *";
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #2b1f13;
+  letter-spacing: 0.5rem;
+}
+
+/* ==== Links and inline elements ==== */
+
+a {
+  color: #6b2419; 
+  text-decoration: none;
+}
+
+a:visited {
+  color: #6b2419;
+}
+
+a:hover {
+  color: #9b3a28;
+  text-decoration: underline;
+}
+
+.clearer {
+  height: 2.2rem;
+}
+
+/* Emphasis like marginal notes in red-brown ink */
+em, i {
+  color: #5d251a;
+}
+
+.body li::marker {
+  content: "☛ ";
+}
+
+/* ==== Footer made to look like a colophon ==== */
+
+.footer {
+  text-align: center;
+  margin: 1.5rem 0 2.5rem;
+  font-size: 0.85rem;
+  font-family: "IM Fell English", serif;
+  color: #3b2615;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(70, 40, 18, 0.5);
+}
+
+/* Small caps for colophon / credits */
+.footer a {
+  color: #6b2419;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ==== Mobile tweaks ==== */
+
+@media (max-width: 900px) {
+  .document {
+    margin: 1rem;
+    padding: 1.4rem 1.2rem;
+  }
+
+  .document::before {
+    top: 0.7rem;
+    left: 0.7rem;
+    right: 0.7rem;
+    bottom: 0.7rem;
+  }
+
+  .related ul {
+    padding: 0.3rem 0.8rem;
+  }
+
+  .sphinxsidebar {
+    padding-top: 0 !important;
+    text-align: center !important;
+
     width: 100%;
-    padding: 5px;
+    border-bottom: 1px solid rgba(84, 50, 25, 0.5);;
+    padding-bottom: 1.1rem;
+  }
 
-    background-color: rgb(187, 14, 14);
+  h1 {
+    margin-top: 1.1rem;
+    padding: 0;
+  }
 
-    border-left: thick double rgb(97, 9, 9);
-    border-top: thick double rgb(97, 9, 9);
-    border-bottom: thick double rgb(97, 9, 9);
+  .sphinxsidebarwrapper {
+    max-width: 450px;
+    margin: auto;
+  }
 
-    color: black;
-    text-decoration: none;
+  h1::before,
+  h1::after {
+    display: none;
+  }
 
-    font-size: 1.1em;
-
-    transition: transform 0.25s, filter 0.25s;
-    transform-origin: 100% 50%;
-    filter: brightness(0.8);
+  .documentwrapper {
+    display: block;
+    justify-content: center;
+    gap: 2rem;
+  }
 }
-
-div.sphinxsidebar a:visited {
-    color: black;
-}
-
-div.sphinxsidebar a:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2);
-}
-
-div.sphinxsidebar .toctree-l1 ul {
-    list-style: none;
-    padding-inline-start: 0;
-}
-

@@ -67,6 +67,7 @@ def update_context(app: Sphinx, pagename, _templatename, context: dict[str, Any]
             else:
                 target.append(_type(url, priority=1000))
 
+GLOBAL_CSS_FILES = ["main.css", "vellum.css", "sidebar.css", "arctext.style.css"]
 
 def setup_extension(app: Sphinx):
     app.setup_extension("sphinxcontrib.jquery")
@@ -79,8 +80,8 @@ def setup_extension(app: Sphinx):
 
     app.add_node(map_node, html=(map_node.visit_html, map_node.depart_html))
 
-    app.add_css_file("css/main.css")
-    app.add_css_file("css/arctext.style.css")
+    for css_file in GLOBAL_CSS_FILES:
+        app.add_css_file(f"css/{css_file}")
 
     app.add_js_file("js/common.js")
     app.add_js_file("js/jquery.arctext.js")

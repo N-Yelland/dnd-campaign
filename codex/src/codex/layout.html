@@ -1,16 +1,44 @@
 
 {% extends "basic/layout.html" %}
 
+{% set reldelim1 = ' &#10087;' %}
+
 {% block linktags %}
   <!-- IM Fell English Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Moon+Dance&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
   {{ super() }}
 {% endblock %}
 
-{% block document %}
-  {{ super() }}
-{% endblock %}
+{%- block document %}
+  <div class="documentwrapper">
+  {%- if render_sidebar %}
+    <div class="margin">
+      {{ sidebar() }}
+    </div>
+    <div class="bodywrapper">
+  {%- endif %}
+      <div class="body" role="main">
+        {% block body %} {% endblock %}
+        <div class="clearer"></div>
+      </div>
+  {%- if render_sidebar %}
+    </div>
+    <div class="margin"></div>
+  {%- endif %}
+  </div>
+  <svg>
+    <filter id="wavy2">
+      <feTurbulence x="0" y="0" baseFrequency="0.02" numOctaves="5" seed="1" />
+      <feDisplacementMap in="SourceGraphic" scale="20" />
+    </filter>
+  </svg>
+{%- endblock %}
+
+{%- block sidebar2 %}{% endblock %}
 
 {% block relbar1 %}
     <div class="related" role="navigation" aria-label="Related">

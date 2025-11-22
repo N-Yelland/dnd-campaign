@@ -1,7 +1,9 @@
 Building a Blessed Backstory
 ============================
+ 
+.. note::
 
-*(NB: "Blessed" is always pronounced with two syllables)*
+    "Blessed" is always pronounced with two syllables.
 
 There are some questions to answer:
 

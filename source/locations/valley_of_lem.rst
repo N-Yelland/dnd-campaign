@@ -1,6 +1,8 @@
 The Valley of Lem
 =================
 
+.. TOOD: add contents?
+
 .. location:: Lembrow 
     :desc: Hardy Town in the Shadow of the Blightwood
     :coords: 0.41238 0.23209
