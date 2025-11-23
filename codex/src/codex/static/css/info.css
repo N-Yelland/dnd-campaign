@@ -71,6 +71,11 @@ main {
     text-decoration: underline;
     cursor: pointer;
 }
+
+h2 {
+    margin: 0;
+}
+
 /* 
 h1, h2 {
     font-family: "IM Fell English SC", serif;

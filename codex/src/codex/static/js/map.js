@@ -16,11 +16,11 @@ const type_data = {
     },
     "region": {
         size: 9.5,
-        fade_out_at: 0.75
+        fade_out_at: 0.5
     },
     "major-region": {
         size: 17,
-        fade_out_at: 0.75
+        fade_out_at: 0.5
     },
     "minor-region": {
         size: 5
@@ -42,7 +42,7 @@ const type_data = {
     "village": {
         size: 4.5,
         icon: "town",
-        fade_in_at: 0.75
+        fade_in_at: 0.4
     },
     "water": {
         size: 9.5
