@@ -17,3 +17,4 @@ Find the codebase on `GitHub <https://github.com/N-Yelland/dnd-campaign>`_.
    player_introduction/index
    map
    locations/index
+   organisations/index

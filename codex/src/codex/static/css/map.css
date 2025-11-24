@@ -41,6 +41,10 @@
     height: 100%;
 }
 
+body:has(#map-region.fullscreen) {
+    overflow: hidden;
+}
+
 #map-region img {
     pointer-events: none;
     position: absolute;

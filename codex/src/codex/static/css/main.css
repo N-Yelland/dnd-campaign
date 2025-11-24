@@ -1,108 +1,4 @@
-/*
-html {
-    background-color: rgb(46, 45, 42);
-}
-
-body {
-    font-family: "IM Fell English", serif;
-
-    border: solid #75755c;
-    background-color: #d3d3b7;
-    box-sizing: border-box;
-    
-    margin: auto;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    max-width: 800px;
-    min-height: calc(100vh - 30px);
-    padding: 15px;
-
-    position: relative;
-}
-
-a {
-    color: rgb(187, 14, 14);
-}
-
-a:visited {
-    color: rgb(97, 9, 9);
-}
-
-section.location {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.body[role=main] > section > section:not(:first-of-type) {
-    margin-top: 30px;
-    padding-top: 30px;
-    border-top: solid #75755c 2pt;
-}
-
-h1, h2, .location h2 + p {
-    font-family: "IM Fell English SC", serif;
-    margin: 0;
-    line-height: 1em;
-}
-
-h1 {
-    font-size: 3em;
-    text-align: center;
-
-    border-bottom: solid #75755c 2pt;
-    margin-bottom: 30px;
-}
-
-h2 {
-    font-size: 2em;
-}
-
-.location h2 + p {
-    font-weight: normal;
-    text-transform: lowercase;
-    color: #75755c;
-    font-size: 1.5em;
-}
-
-h3 {
-    margin: 0;
-}
-
-.large-lc-text {
-    font-size: 1.25em;
-    font-weight: normal;
-    pointer-events: none;
-}
-
-a.headerlink {
-    display: inline-block;
-    opacity: 0;
-    transition: opacity 0.4s;
-
-    color: #75755c;
-    padding-left: 5pt;
-
-    font-weight: normal;
-    text-decoration: none;
-}
-
-*:hover > a.headerlink {
-    position: relative;
-    opacity: 1;
-}
-
-.footer[role=contentinfo] {
-    color: #75755c;
-    text-align: center;
-    margin-bottom: 5px;
-    margin-top: 10px;
-}
-
-.admonition {
-    background-color: #f0f0e5;
-}
-
-/* manuscript style? */
+/* manuscript style */
 
 body {
   margin: 0;
@@ -266,14 +162,22 @@ h1::after {
 
 /* Small medieval symbol next to permalinks */
 .headerlink {
+  display: inline;
+  opacity: 0;
+  transition: opacity 0.4s;
+
   text-decoration: none;
-  margin-left: 0.3rem;
-  font-size: 0.85rem;
   color: #7c1b1b;
 }
 
-.headerlink:hover {
-  color: #b53d3d;
+*:hover > a.headerlink {
+    position: relative; 
+    text-decoration: none;
+    opacity: 1;
+}
+
+h1 .headerlink {
+  display: none;
 }
 
 .large-lc-text {

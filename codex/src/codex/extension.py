@@ -73,7 +73,7 @@ def setup_extension(app: Sphinx):
     app.setup_extension("sphinxcontrib.jquery")
 
     app.config["html_theme"] = "codex"
-    app.config["html_permalinks_icon"] = "&#9756;"  # ☜ pointing hand
+    app.config["html_permalinks_icon"] = "&nbsp;&#9756;"  # ☜ pointing hand
 
     app.add_directive("location", LocationDirective)
     app.add_directive("map", MapDirective)

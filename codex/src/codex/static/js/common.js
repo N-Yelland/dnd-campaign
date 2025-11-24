@@ -14,5 +14,5 @@ $.fn.enlargeLowerCase = function () {
 };
 
 $(document).ready(function () {
-    $("h2").enlargeLowerCase();
+    $("h2, h3").enlargeLowerCase();
 });
