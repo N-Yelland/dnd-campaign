@@ -5,7 +5,7 @@ The Church of Brightwater
     
     --- Mother Superior Agnessa Kandalah Yovahl
 
-In the eyes of many, the Church of Brightwater was and continues to be the single most important organisation in the fight against the Silverblight. In their Sanatoria they administer life-saving treatment to those afflicted, and in their Refineries they produce the priceless Reversing Elixir, the one substance capable of undoing the Silverblight's infection In settlements across Erran they work closely with Blessed Defenders, supporting each other to deliver their services more effectively.
+In the eyes of many, the Church of Brightwater was and continues to be the single most important organisation in the fight against the Silverblight. In their Sanatoria they administer life-saving treatment to those afflicted, and in their Refineries they produce the priceless Reversing Elixir, the one substance capable of undoing the Silverblight's infection. In settlements across Erran they work closely with Blessed Defenders, supporting each other to deliver their services more effectively to those most in need.
 
 The endurance of the Church's relationship with the Blessed Defenders is seen through their worship of the Blessed Saints. These are Blessed Defenders of years gone by who gave their lives in heroic acts of defence against the Blight, immortalised in prayers and hymns heard in the Church's ceremonies across Erran.
 
@@ -13,7 +13,7 @@ The Church does not follow a higher power per se, but a lot their teachings make
 
 Locations
 ---------
-Lightwarden Abbey serves as the headquarters of the church, located in the Church's founding city: Brightwater. The Abbey overlooks the city from atop St. Septa's Island in Lake Vossar.
+Lightwarden Abbey serves as the headquarters of the church, located in the Church's founding city of Brightwater. The Abbey overlooks the city from atop St. Septa's Island in Lake Vossar. The Abbey includes its own Sanatorium and Refinery, but these are complemented by a network of similar establishments in settlements across Erran.
 
 Sanatoria:
 """"""""""

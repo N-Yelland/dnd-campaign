@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Vilras",
+    "docname": "locations/blightwood",
+    "coords": [
+      0.26042,
+      0.15315
+    ],
+    "id": "vilras",
+    "type": "ruin",
+    "label_offset": "left"
+  },
+  {
+    "name": "Brightwater",
+    "docname": "locations/plains",
+    "coords": [
+      0.538,
+      0.30749
+    ],
+    "id": "brightwater",
+    "type": "city",
+    "label_offset": "above"
+  },
+  {
+    "name": "Klathras",
+    "docname": "locations/plains",
+    "coords": [
+      0.53692,
+      0.46825
+    ],
+    "id": "klathras",
+    "type": "city",
+    "label_offset": "above right"
+  },
+  {
+    "name": "Lembrow",
+    "docname": "locations/valley_of_lem",
+    "coords": [
+      0.41238,
+      0.23209
+    ],
+    "id": "lembrow",
+    "type": "town",
+    "label_offset": "above"
+  },
+  {
+    "name": "The Crimson Steps Temple",
+    "docname": "locations/valley_of_lem",
+    "coords": [
+      0.44596,
+      0.21206
+    ],
+    "id": "the-crimson-steps-temple",
+    "type": "landmark",
+    "label_offset": "below"
+  },
+  {
+    "name": "Lemford",
+    "docname": "locations/valley_of_lem",
+    "coords": [
+      0.435,
+      0.25712
+    ],
+    "id": "lemford",
+    "type": "town",
+    "label_offset": "above"
+  },
+  {
+    "name": "Worton",
+    "docname": "locations/valley_of_lem",
+    "coords": [
+      0.40108,
+      0.19764
+    ],
+    "id": "worton",
+    "type": "village",
+    "label_offset": "below"
+  },
+  {
+    "name": "Nim's Hollow",
+    "docname": "locations/valley_of_lem",
+    "coords": [
+      0.37537,
+      0.19816
+    ],
+    "id": "nim's-hollow",
+    "type": "village",
+    "label_offset": "left"
+  },
+  {
+    "name": "Grimstead-on-the-Lem",
+    "docname": "locations/valley_of_lem",
+    "coords": [
+      0.39695,
+      0.15803
+    ],
+    "id": "grimstead-on-the-lem",
+    "type": "village",
+    "label_offset": "left"
+  },
+  {
+    "name": "Tarras",
+    "docname": "locations/valley_of_lem",
+    "coords": [
+      0.39394,
+      0.09949
+    ],
+    "id": "tarras",
+    "type": "ruin",
+    "label_offset": "right"
+  }
+]
