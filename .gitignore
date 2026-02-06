@@ -3,4 +3,3 @@ venv/
 build/
 __pycache__/
 *.egg-info/
-_backup/
