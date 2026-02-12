@@ -10,8 +10,11 @@ dependencies = [
     "sphinxcontrib-jquery"
 ]
 
+[project.entry-points."sphinx.extensions"]
+codex = "codex.extension:setup_extension"
+
 [project.entry-points."sphinx.html_themes"]
-name_of_theme = "codex"
+codex = "codex"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

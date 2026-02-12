@@ -14,7 +14,7 @@ author = 'Nic Yelland'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ['codex']
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -30,9 +30,6 @@ html_static_path = ['_static']
 html_last_updated_fmt = ""
 
 html_title = "The Blighted & The Blessed"
-
-extensions = ['codex']
-
 
 # For speed, we disable these featuers:
 html_use_index = False
