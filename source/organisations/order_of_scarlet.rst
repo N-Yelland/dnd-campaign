@@ -51,7 +51,23 @@ Duality is a key concept in the theology surrounding the Old Gods - it is no coi
 
 Akkamon and Ithikku
 """""""""""""""""""
-Order and Chaos
+
+.. list-table::
+    :width: 100%
+    :class: borderless
+
+    * - .. figure:: ../_static/img/Akkamon.png
+            :width: 100%
+            :alt: Depiction of Akkamon, God of Order
+
+            Akkamon, the God of Order
+
+      - .. figure:: ../_static/img/Ithikku.png
+            :width: 100%
+            :alt: Depiction of Ithikku, God of Chaos
+
+            Ithikku, the God of Chaos
+
 
 Orim and Onu
 """"""""""""
