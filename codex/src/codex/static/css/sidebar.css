@@ -61,6 +61,10 @@ div.sphinxsidebarwrapper {
     margin-top: 0.25rem;
 }
 
+.sphinxsidebar li.toctree-l3 {
+  font-style: italic;
+}
+
 .sphinxsidebar a {
   color: #3b2615;
   text-decoration: none;

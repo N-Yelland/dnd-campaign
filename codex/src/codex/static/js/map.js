@@ -283,7 +283,18 @@ $(document).ready(function () {
         load_into_infobox(selected_info);
     }
 
-    // Add lables for map data...
+    // Track when both AJAX calls complete
+    var ajax_requests_completed = 0;
+    var total_ajax_requests = 2;
+
+    function check_all_loaded() {
+        ajax_requests_completed++;
+        if (ajax_requests_completed === total_ajax_requests) {
+            update_opacity();
+        }
+    }
+
+    // Add labels for map data...
     $.getJSON("map_data.json", function (data) {
         // create and position label elements
         data.forEach(add_map_object);
@@ -299,15 +310,16 @@ $(document).ready(function () {
             $("#infobox").addClass("hidden");
             localStorage.removeItem("selected_info")
         })
+
+        check_all_loaded();
     });
 
     // Add remaining labels...
     json_src = $("#labels").attr("data-json");
     $.getJSON(json_src, function (data) {
         data.forEach(add_map_object);
+        check_all_loaded();
     });
-    
-    update_opacity();
 
 });
 
@@ -334,6 +346,12 @@ $(document).ready(function () {
     
     /* MAP CONTROLS */
 
+    // Restore full-screen state from localStorage
+    var savedFullscreenState = localStorage.getItem("map_fullscreen");
+    if (savedFullscreenState === "true") {
+        toggle_full_screen();
+    }
+
     $("#fullscreen-button").on("click", function () {
         toggle_full_screen();
     });
@@ -356,8 +374,6 @@ $(document).ready(function () {
         alt_ty = 0;
         adjust_zoom($("#map-region").offset().left, $("#map-region").offset().top, zoom);
     });
-
-    update_opacity();
 });
 
 function toggle_full_screen() {
@@ -367,9 +383,11 @@ function toggle_full_screen() {
     if ($("#map-region").hasClass("fullscreen")) {
         title = "Exit Fullscreen";
         src = "_static/img/control_icons/fullscreen_exit.svg";
+        localStorage.setItem("map_fullscreen", "true");
     } else {
         title = "Fullscreen";
         src = "_static/img/control_icons/fullscreen.svg";
+        localStorage.setItem("map_fullscreen", "false");
     }
     $("#fullscreen-button").attr("title", title);
     $("#fullscreen-button .button-icon").attr("src", src);

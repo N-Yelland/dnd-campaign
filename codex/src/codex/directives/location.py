@@ -41,8 +41,10 @@ class LocationDirective(SphinxDirective):
             "coords": coords,
             "id": section_id,
             "type": self.options.get("type"),
-            "label_offset": self.options.get("label_offset")
+            "label_offset": self.options.get("label_offset", "above")
         }
+
+        print(f"Found location: {name}")
 
         section_node = nodes.section(ids=[section_id], classes=["location"])
         title_node = nodes.title(text=name)

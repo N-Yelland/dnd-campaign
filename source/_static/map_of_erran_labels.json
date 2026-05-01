@@ -12,12 +12,6 @@
         "label_rotation": -20
     },
     {
-        "name": "Ranakhan",
-        "coords": [0.25378, 0.23418],
-        "type": "ruin",
-        "label_offset": "above"
-    },
-    {
         "top_text": "The Great",
         "name": "Blightwood",
         "coords": [0.35533, 0.17706],
@@ -130,17 +124,11 @@
         "type": "river"
     },
     {
-        "name": "Mullick",
-        "coords": [0.43469, 0.30473],
-        "type": "town",
-        "label_offset": "right"
-    },
-    {
         "name": "R. Fastburne",
-        "coords": [0.43449, 0.29137],
+        "coords": [0.45069, 0.29771],
         "type": "river",
-        "label_curvature": 0.02,
-        "label_rotation": -10
+        "label_curvature": -0.02,
+        "label_rotation": -35
     },
     {
         "name": "Millhold",

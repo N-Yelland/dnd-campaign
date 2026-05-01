@@ -20,7 +20,7 @@ Sanatoria:
 
 * Brightwater: "Grand Sanatorium of the Light Everlasting" - Mothers Enid Coren and Rosalind Hornfarr.
 * Lembrow - Blessed Mother Mariah Fairford
-* Mullick - Blessed Mother Brinna Wellsworth
+* Great Burnton - Blessed Mother Brinna Wellsworth
 * Millhold - Mother Irene Oberrak
 * *Others...*
 

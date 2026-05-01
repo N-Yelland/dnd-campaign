@@ -116,3 +116,35 @@ The Valley of Lem
     In the shadow of the imposing Mount Ereg can be found the graceful towers and pavilions of Tarras. In the time of the Old Empire, it was made rich by its proximity to the Bluestone quarries in the Grimpeaks and gemstone mines in the Erranite mountains.
 
     Following the Empire's fall, the city's remoteness made it an excellent home for a community of Tieflings ostracised from their previous homelands. This was not an uncommon occurrence: the Tiefling species possesses a considerably stronger resistance to the Blight, which was often connected in a negative light to their otherworldly appearance and the belief that the Blight is a punishment sent by the Gods.
+
+.. location:: Imora's Tower
+    :desc: Home of the Sorceress Imora
+    :coords: 0.42104 0.30579
+    :type: landmark
+    :label_offset: below
+
+    Home of the Sorceress Imora.
+
+.. location:: High Burnton
+    :desc: Hilly village near the Source of the River Fastburne
+    :coords: 0.43116 0.29470
+    :type: village
+    :label_offset: above
+
+    Hilly village near the Source of the River Fastburne
+
+.. location:: Great Burnton
+    :desc: Market town on the River Fastburne
+    :coords: 0.45539 0.28321
+    :type: town
+    :label_offset: right
+
+    Market town on the River Fastburne
+
+.. location:: Mullick
+    :desc: Village at the confluence of the Lem and the Fastburne
+    :coords: 0.46822 0.26970
+    :type: village
+    :label_offset: right
+
+    Village at the confluence of the Lem and the Fastburne
