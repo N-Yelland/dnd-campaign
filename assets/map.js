@@ -162,7 +162,7 @@
     const longestLine = Math.max(...lines.map((line) => line.length), 1);
     const labelWidth = fontSize * longestLine * 0.58 +
       fontSize * (entry.spacing || 0) * Math.max(0, longestLine - 1);
-    const lineHeight = fontSize * 1.35;
+    const lineHeight = fontSize * 1.8;
     const labelHeight = fontSize * 1.4 + Math.max(0, lines.length - 1) * lineHeight;
     const minMarkerOffsetX = fontSize * (markerRadius + labelWidth / (2 * fontSize) + 0.4);
     const minMarkerOffsetY = fontSize * (markerRadius + labelHeight / (2 * fontSize) + 0.4);
@@ -243,7 +243,7 @@
 
     const textAnchor = entry.align === "left" ? "start" : entry.align === "right" ? "end" : "middle";
     const curvedLines = [];
-    const lineHeight = fontSize * 1.35;
+    const lineHeight = fontSize * 1.8;
     if (entry.labelCurvature) {
       const key = entry.key.replace(/[^a-z0-9]+/gi, "-");
       const curve = Math.max(-fontSize * 1.5, Math.min(fontSize * 1.5, entry.labelCurvature * 1200));
