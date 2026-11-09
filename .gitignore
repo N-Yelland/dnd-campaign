@@ -1,5 +1,7 @@
 venv/
 .venv/
 build/
+dist/
+node_modules/
 __pycache__/
 *.egg-info/

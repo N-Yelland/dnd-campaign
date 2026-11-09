@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#263a35">
+    <title>Atlas of Erran — The Blighted &amp; The Blessed</title>
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body class="map-page">
+    <header class="masthead">
+      <a class="wordmark" href="index.html" aria-label="Erran field guide home">
+        <span class="wordmark-mark" aria-hidden="true">✦</span>
+        <span>Erran <small>Field Guide</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="page.html?page=player-introduction">For players</a>
+        <a href="page.html?page=locations">Places</a>
+        <a href="page.html?page=organisations">Factions</a>
+        <a class="nav-map" href="map.html" aria-current="page">Explore the map <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main class="atlas-shell">
+      <div class="atlas-heading">
+        <div>
+          <p class="eyebrow">The known continent</p>
+          <h1>Atlas of Erran</h1>
+        </div>
+        <div class="atlas-actions">
+          <p class="atlas-hint">Drag to travel · Pinch or scroll to zoom</p>
+          <form id="location-search" class="location-search" role="search">
+            <label for="location-query">Find a place
+              <input id="location-query" type="search" list="location-options" placeholder="Search the atlas">
+              <datalist id="location-options"></datalist>
+            </label>
+            <button type="submit">Find</button>
+          </form>
+        </div>
+      </div>
+      <div class="atlas-layout">
+        <section class="map-frame" aria-label="Interactive map of Erran">
+          <div id="map-viewport" class="map-viewport" tabindex="0" aria-label="Map. Use the controls to zoom and explore.">
+            <div id="map-plane" class="map-plane">
+              <img id="map-image" src="source/_static/img/map_of_erran.jpg" alt="Hand-drawn map of the continent of Erran" draggable="false">
+              <svg id="map-labels" class="map-labels" role="group" aria-label="Map locations"></svg>
+            </div>
+            <div class="map-tools" aria-label="Map controls">
+              <button type="button" id="zoom-in" aria-label="Zoom in" title="Zoom in">+</button>
+              <button type="button" id="zoom-out" aria-label="Zoom out" title="Zoom out">−</button>
+              <button type="button" id="map-home" aria-label="Fit map to view" title="Fit map to view">⌂</button>
+              <button type="button" id="map-fullscreen" aria-label="Enter fullscreen" title="Enter fullscreen">⛶</button>
+            </div>
+            <div id="map-status" class="map-status" role="status">Unfolding the map…</div>
+            <div id="map-zoom-level" class="map-zoom-level" aria-live="polite"></div>
+          </div>
+        </section>
+        <aside id="location-panel" class="location-panel" aria-live="polite" aria-label="Selected location">
+          <div class="panel-empty">
+            <span class="panel-compass" aria-hidden="true">✧</span>
+            <p class="eyebrow">A traveller's atlas</p>
+            <h2>Choose a place</h2>
+            <p>Select a label on the map to read its field notes. On a small screen, the notes appear below the map.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>Map labels open a place's field notes</span>
+      <a href="index.html">Back to the field guide <span aria-hidden="true">→</span></a>
+    </footer>
+    <script src="assets/vendor/js-yaml.min.js"></script>
+    <script src="assets/vendor/markdown-it.min.js"></script>
+    <script src="assets/content.js"></script>
+    <script src="assets/site.js"></script>
+    <script src="assets/map.js?v=12"></script>
+  </body>
+</html>

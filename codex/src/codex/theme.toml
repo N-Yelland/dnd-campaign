@@ -1,9 +1,0 @@
-[theme]
-inherit = "basic"
-sidebars = ["navigation.html"]
-
-[options]
-fixed_sidebar = false
-sidebar_collapse = true
-sidebar_includehidden = true
-sidebar_width = "220px"
