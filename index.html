@@ -3,84 +3,76 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#263a35">
-    <meta name="description" content="A field guide to Erran, the setting of The Blighted and the Blessed.">
+    <meta name="theme-color" content="#102f43">
+    <meta name="description" content="The Adventurer's Guide to Erran, the setting of The Blighted and the Blessed.">
     <title>The Blighted &amp; The Blessed — Erran</title>
+    <script src="assets/theme.js"></script>
     <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/header.js" defer></script>
+    <script src="assets/footer.js" defer></script>
+    <link rel="preload" as="image" href="assets/erran-background.png">
   </head>
-  <body>
-    <header class="masthead">
-      <a class="wordmark" href="index.html" aria-label="Erran field guide home">
-        <span class="wordmark-mark" aria-hidden="true">✦</span>
-        <span>Erran <small>Field Guide</small></span>
-      </a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
-      <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="page.html?page=player-introduction">For players</a>
-        <a href="page.html?page=locations">Places</a>
-        <a href="page.html?page=organisations">Factions</a>
-        <a class="nav-map" href="map.html">Explore the map <span aria-hidden="true">↗</span></a>
-      </nav>
-    </header>
+  <body class="home-page">
+    <header class="masthead" data-site-header></header>
 
     <main>
+      <div class="home-backdrop" aria-hidden="true">
+        <img src="assets/erran-background.png" alt="" width="1125" height="1125" fetchpriority="high">
+      </div>
       <section class="hero">
         <div class="hero-copy">
           <p class="eyebrow"><span aria-hidden="true">✧</span> A campaign setting for D&amp;D 5.5e</p>
-          <h1>The Blighted<br><em>&amp; the Blessed</em></h1>
-          <p class="hero-lede">A field guide to Erran: a continent shaped by a silver plague, old magic, and the people who still choose to hope.</p>
-          <a class="button button-light" href="page.html?page=player-introduction">Enter the story <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="hero-ornament" aria-hidden="true">
-          <div class="compass">
-            <span class="compass-north">N</span>
-            <span class="compass-east">E</span>
-            <span class="compass-south">S</span>
-            <span class="compass-west">W</span>
-            <span class="compass-star">✦</span>
-          </div>
-          <p>ERRAN<br><small>Years of Longing</small></p>
+          <h1>The Blighted<br><em>&amp; The Blessed</em></h1>
+          <p class="hero-lede">Welcome to Erran: a continent shaped by an Ancient Empire, the terrible plague that brought about its end, and the people who despite all this, still choose to hope.</p>
+          <a class="button button-light" href="page.html?page=player-introduction">Enter the Story<span aria-hidden="true">→</span></a>
         </div>
       </section>
 
       <section class="welcome page-wrap">
         <div class="section-heading">
-          <p class="eyebrow">A note for travellers</p>
-          <h2>Hope is hard-won here.</h2>
+          <p class="eyebrow">A Note for Blessed Adventurers:</p>
+          <h2>Seek what answers you can find!</h2>
         </div>
-        <p>Silverblight has swallowed the old Erranite Empire and its arcane wonders. The twisted woods still press against the borders of civilisation. Yet the Blessed stand watch, the Church tends the afflicted, and scattered communities keep building a future from the ruins.</p>
+        <p>Silverblight has swallowed the Old Erranite Empire and its arcane wonders. The twisted Blightwood still presses against the borders of civilisation. Yet the Blessed Defenders stand watch, the Church tends the afflicted, and a brave few venture into the Blight's domain to try and uncover its mysteries...</p>
       </section>
 
       <section class="portal-grid page-wrap" aria-label="Explore the guide">
         <a class="portal-card" href="page.html?page=player-introduction">
           <span class="card-index">I</span>
-          <span class="card-icon" aria-hidden="true">✧</span>
-          <h2>For players</h2>
+          <svg class="card-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="7" r="4" />
+            <path d="M3 21v-2a9 9 0 0 1 18 0v2M7 21v-3m10 3v-3" />
+          </svg>
+          <h2>Player Introduction</h2>
           <p>Meet the setting, shape a character, and learn what your hero might know.</p>
           <span class="card-link">Begin here <span aria-hidden="true">→</span></span>
         </a>
         <a class="portal-card" href="map.html">
           <span class="card-index">II</span>
-          <span class="card-icon" aria-hidden="true">⌖</span>
-          <h2>The atlas</h2>
+          <svg class="card-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m3 5 6-3 6 3 6-3v17l-6 3-6-3-6 3ZM9 2v17m6-14v17" />
+          </svg>
+          <h2>The Atlas</h2>
           <p>Trace the old roads, find the settlements, and look toward the Blightwood.</p>
           <span class="card-link">Open the map <span aria-hidden="true">→</span></span>
         </a>
-        <a class="portal-card" href="page.html?page=organisations">
+        <a class="portal-card" href="page.html">
           <span class="card-index">III</span>
-          <span class="card-icon" aria-hidden="true">❧</span>
-          <h2>Orders &amp; factions</h2>
-          <p>Discover the institutions, beliefs, and rivalries that shape life in Erran.</p>
-          <span class="card-link">Meet the factions <span aria-hidden="true">→</span></span>
+          <svg class="card-icon" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3 3h18M5 3v18l7-4 7 4V3M12 6l3 4-3 4-3-4Z" />
+          </svg>
+          <h2>The Adventurer's Guide</h2>
+          <p>Explore the places, people, history, and lore of Erran.</p>
+          <span class="card-link">Explore the guide <span aria-hidden="true">→</span></span>
         </a>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <span>Composed for the world of Erran</span>
-      <a href="https://github.com/N-Yelland/dnd-campaign">Campaign archive <span aria-hidden="true">↗</span></a>
-    </footer>
+    <footer class="site-footer" data-site-footer></footer>
+    <script src="assets/vendor/js-yaml.min.js"></script>
+    <script src="assets/vendor/markdown-it.min.js"></script>
+    <script src="assets/content.js"></script>
+    <script src="assets/search.js"></script>
     <script src="assets/site.js"></script>
   </body>
 </html>

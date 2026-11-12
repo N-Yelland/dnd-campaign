@@ -375,7 +375,7 @@
     locationPanel.setAttribute("aria-busy", "true");
     const heading = document.createElement("p");
     heading.className = "eyebrow";
-    heading.textContent = entry.type ? `${entry.type} · Erran` : "Field notes";
+    heading.textContent = entry.type ? `${entry.type} · Erran` : "Notes";
     const title = document.createElement("h2");
     title.textContent = entry.title;
     const content = document.createElement("div");
@@ -400,7 +400,7 @@
       } else {
         const note = document.createElement("p");
         note.className = "panel-note";
-        note.textContent = "No written field notes have been added to this place yet.";
+        note.textContent = "No written notes have been added to this place yet.";
         content.append(note);
       }
       if (page.children.length) {
@@ -408,13 +408,13 @@
         childList.className = "panel-children";
         const label = document.createElement("p");
         label.className = "eyebrow";
-        label.textContent = "Nearby field notes";
+        label.textContent = "Nearby notes";
         childList.append(label);
         for (const key of page.children) {
           const child = relatedEntries.find((candidate) => candidate.key === key);
           if (!child) continue;
           const link = document.createElement("a");
-          link.href = `page.html?page=${encodeURIComponent(child.key)}`;
+          link.href = child.href;
           link.textContent = child.title;
           childList.append(link);
         }
@@ -423,7 +423,7 @@
       const link = document.createElement("a");
       link.className = "panel-read-more";
       link.href = `page.html?page=${encodeURIComponent(page.key)}`;
-      link.textContent = "Open full field notes";
+      link.textContent = "Open full article";
       locationPanel.append(link);
     } catch (error) {
       const message = document.createElement("p");

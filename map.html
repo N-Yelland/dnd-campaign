@@ -3,25 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#263a35">
+    <meta name="theme-color" content="#102f43">
     <title>Atlas of Erran — The Blighted &amp; The Blessed</title>
+    <script src="assets/theme.js"></script>
     <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/header.js" defer></script>
+    <script src="assets/footer.js" defer></script>
   </head>
   <body class="map-page">
-    <header class="masthead">
-      <a class="wordmark" href="index.html" aria-label="Erran field guide home">
-        <span class="wordmark-mark" aria-hidden="true">✦</span>
-        <span>Erran <small>Field Guide</small></span>
-      </a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
-      <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="page.html?page=player-introduction">For players</a>
-        <a href="page.html?page=locations">Places</a>
-        <a href="page.html?page=organisations">Factions</a>
-        <a class="nav-map" href="map.html" aria-current="page">Explore the map <span aria-hidden="true">↗</span></a>
-      </nav>
-    </header>
+    <header class="masthead" data-site-header></header>
 
     <main class="atlas-shell">
       <div class="atlas-heading">
@@ -44,7 +34,7 @@
         <section class="map-frame" aria-label="Interactive map of Erran">
           <div id="map-viewport" class="map-viewport" tabindex="0" aria-label="Map. Use the controls to zoom and explore.">
             <div id="map-plane" class="map-plane">
-              <img id="map-image" src="source/_static/img/map_of_erran.jpg" alt="Hand-drawn map of the continent of Erran" draggable="false">
+              <img id="map-image" src="content/_static/img/map_of_erran.jpg" alt="Hand-drawn map of the continent of Erran" draggable="false">
               <svg id="map-labels" class="map-labels" role="group" aria-label="Map locations"></svg>
             </div>
             <div class="map-tools" aria-label="Map controls">
@@ -62,19 +52,18 @@
             <span class="panel-compass" aria-hidden="true">✧</span>
             <p class="eyebrow">A traveller's atlas</p>
             <h2>Choose a place</h2>
-            <p>Select a label on the map to read its field notes. On a small screen, the notes appear below the map.</p>
+            <p>Select a label on the map to see more about it. On a small screen, the notes appear below the map.</p>
           </div>
         </aside>
       </div>
     </main>
 
-    <footer class="site-footer">
-      <span>Map labels open a place's field notes</span>
-      <a href="index.html">Back to the field guide <span aria-hidden="true">→</span></a>
-    </footer>
+    <footer class="site-footer" data-site-footer></footer>
     <script src="assets/vendor/js-yaml.min.js"></script>
     <script src="assets/vendor/markdown-it.min.js"></script>
+    <script src="assets/images.js"></script>
     <script src="assets/content.js"></script>
+    <script src="assets/search.js"></script>
     <script src="assets/site.js"></script>
     <script src="assets/map.js?v=11"></script>
   </body>
