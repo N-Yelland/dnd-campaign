@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102f43">
+    <title>Search — Erran Adventurer's Guide</title>
+    <script src="assets/theme.js"></script>
+    <link rel="stylesheet" href="assets/site.css">
+    <script src="assets/header.js" defer></script>
+    <script src="assets/footer.js" defer></script>
+  </head>
+  <body class="search-results-page">
+    <header class="masthead" data-site-header></header>
+    <main class="reading-layout search-page">
+      <p class="eyebrow">Adventurer's Guide</p>
+      <h1 id="search-title">Search articles</h1>
+      <p class="search-description">Find places, people, and lore by searching article titles, summaries, and text.</p>
+      <p id="search-results-status" class="search-results-status" role="status">Opening the guide…</p>
+      <button id="search-retry" class="search-retry" type="button" hidden>Try again</button>
+      <ol id="search-results-list" class="search-results-list"></ol>
+    </main>
+    <footer class="site-footer" data-site-footer></footer>
+    <script src="assets/vendor/js-yaml.min.js"></script>
+    <script src="assets/vendor/markdown-it.min.js"></script>
+    <script src="assets/content.js"></script>
+    <script src="assets/search.js"></script>
+  </body>
+</html>
