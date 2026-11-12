@@ -5,6 +5,12 @@ This is the campaign guide for Erran, the setting of my D&D 5.5e homebrew campai
 
 Visit the published site at [n-yelland.github.io/dnd-campaign](https://n-yelland.github.io/dnd-campaign/).
 
+## Deployment
+
+The `Deploy site` workflow in `.github/workflows/deploy.yml` checks the content, contents navigation, and theme before packaging the four HTML pages, `assets/`, and `content/` for GitHub Pages. A merge or push to `main` then deploys that package automatically. Pull requests to `main` run the checks and package the site without publishing. You can also run the workflow manually from `main`.
+
+In the repository's **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**. The deployment uses the `github-pages` environment and the workflow's built-in token; no separate deployment secret is needed. The published address is [n-yelland.github.io/dnd-campaign](https://n-yelland.github.io/dnd-campaign/). Deployment progress and the final site URL appear in the workflow run.
+
 ## Contents
 
 - `index.html`, `page.html`, `map.html`, and `search.html` are the landing page, shared Markdown reader, interactive atlas, and article search results.
