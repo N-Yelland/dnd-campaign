@@ -6,6 +6,20 @@ child_pages:
   - blightwood/
   - valley-of-lem/
   - plains/
+  - elven-groves/
+  - grey_dales/
 ---
 
 Explore Erran's regions and the settlements, landmarks, and other places within them. The atlas offers another way to find these same location articles.
+
+The Great Blightwood
+Valley of Lem
+Valley of Tel
+  - Tellingham
+The Grey Dales
+The Elven Groves
+The Plains
+The Northern Wastes
+Murnish Hills
+
+

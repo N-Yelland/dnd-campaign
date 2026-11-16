@@ -15,6 +15,7 @@
   const view = { x: 0, y: 0, scale: 1, width: 0, height: 0 };
   const savedViewKey = "erran-atlas-view-v1";
   const maxZoomRatio = 24;
+  const labelLineHeight = 1.2;
   const panelParent = locationPanel.parentElement;
   const panelNextSibling = locationPanel.nextSibling;
   let mapEntries = [];
@@ -25,6 +26,10 @@
   let saveViewTimer;
   let lastMapCenter = null;
   let lastZoomRatio = 1;
+  let showCoordinates = false;
+  let mousePosition = null;
+  let frozenCoordinates = null;
+  let coordinateClick = null;
 
   const labelSizes = {
     feature: 22, ruin: 21, river: 22, region: 36, "major-region": 68,
@@ -44,6 +49,11 @@
     village: { in: [4.8, 5.6] },
     water: { in: [1.5, 2] }
   };
+  const locationZooms = {
+    "major-region": 1.5, region: 2.5, "minor-region": 4,
+    water: 3.5, river: 4, city: 6, town: 9, village: 12,
+    feature: 10, landmark: 14, ruin: 14
+  };
 
   function svgElement(tag, attributes) {
     const element = document.createElementNS(svgNamespace, tag);
@@ -53,11 +63,49 @@
 
   function applyView() {
     plane.style.transform = `translate3d(${view.x}px, ${view.y}px, 0) scale(${view.scale})`;
-    zoomLevel.textContent = `${Math.round((view.scale / fitScale) * 100)}%`;
+    updateMapReadout();
     updateVisibleLabels();
     rememberView();
     saveView();
   }
+
+  function getMapCoordinates(position) {
+    if (!position || !view.width || !view.height) return null;
+    const bounds = viewport.getBoundingClientRect();
+    const localX = position.x - bounds.left;
+    const localY = position.y - bounds.top;
+    const x = (localX - view.x) / view.scale / view.width;
+    const y = (localY - view.y) / view.scale / view.height;
+    if (localX < 0 || localX > bounds.width || localY < 0 || localY > bounds.height ||
+        x < 0 || x > 1 || y < 0 || y > 1) return null;
+    return { x, y };
+  }
+
+  function updateMapReadout() {
+    if (!showCoordinates) {
+      zoomLevel.textContent = `${Math.round((view.scale / fitScale) * 100)}%`;
+      return;
+    }
+    zoomLevel.title = frozenCoordinates
+      ? "Coordinates frozen. Click the map to resume tracking, or click here to show zoom."
+      : "Click the map to freeze coordinates, or click here to show zoom. Coordinates run from 0 to 1, starting at the top left.";
+    zoomLevel.textContent = "X: —, Y: —";
+    const coordinates = frozenCoordinates || getMapCoordinates(mousePosition);
+    if (!coordinates) return;
+    zoomLevel.textContent = `X: ${coordinates.x.toFixed(4)}, Y: ${coordinates.y.toFixed(4)}${frozenCoordinates ? " (frozen)" : ""}`;
+  }
+
+  zoomLevel.addEventListener("click", () => {
+    showCoordinates = !showCoordinates;
+    frozenCoordinates = null;
+    coordinateClick = null;
+    zoomLevel.setAttribute("aria-pressed", String(showCoordinates));
+    zoomLevel.setAttribute("aria-live", showCoordinates ? "off" : "polite");
+    zoomLevel.title = showCoordinates
+      ? "Show zoom percentage. Map coordinates run from 0 to 1, starting at the top left."
+      : "Show map coordinates (x, y from 0 to 1)";
+    updateMapReadout();
+  });
 
   function getZoomRatio() {
     return fitScale ? view.scale / fitScale : 1;
@@ -162,14 +210,20 @@
     const longestLine = Math.max(...lines.map((line) => line.length), 1);
     const labelWidth = fontSize * longestLine * 0.58 +
       fontSize * (entry.spacing || 0) * Math.max(0, longestLine - 1);
-    const lineHeight = fontSize * 1.8;
-    const labelHeight = fontSize * 1.4 + Math.max(0, lines.length - 1) * lineHeight;
-    const minMarkerOffsetX = fontSize * (markerRadius + labelWidth / (2 * fontSize) + 0.4);
-    const minMarkerOffsetY = fontSize * (markerRadius + labelHeight / (2 * fontSize) + 0.4);
+    const lineHeight = fontSize * labelLineHeight;
+    const labelHeight = fontSize * 0.8 + Math.max(0, lines.length - 1) * lineHeight;
+    const labelLeft = entry.align === "left" ? 0 : entry.align === "right" ? -labelWidth : -labelWidth / 2;
+    const labelRight = labelLeft + labelWidth;
+    const markerClearance = fontSize * (markerRadius + 0.4);
+    // Offsets place the text's nearest edge beside the marker, respecting its anchor.
+    const minMarkerOffsetLeft = markerClearance + labelRight;
+    const minMarkerOffsetRight = markerClearance - labelLeft;
+    const minMarkerOffsetY = fontSize * (markerRadius + 0.2) + labelHeight / 2;
 
     if (Array.isArray(offset)) {
       offsetX = (offset[0] / 100) * fontSize;
       offsetY = (offset[1] / 100) * fontSize;
+      const minMarkerOffsetX = offsetX < 0 ? minMarkerOffsetLeft : minMarkerOffsetRight;
       if (isMarker && Math.abs(offsetX) < minMarkerOffsetX && Math.abs(offsetY) < minMarkerOffsetY) {
         if (Math.abs(offsetX) / minMarkerOffsetX > Math.abs(offsetY) / minMarkerOffsetY) {
           offsetX = Math.sign(offsetX || 1) * minMarkerOffsetX;
@@ -179,10 +233,10 @@
       }
     } else if (typeof offset === "string" && offset.trim()) {
       const parts = offset.split(/\s+/);
-      if (parts.includes("left")) offsetX -= isMarker ? Math.max(fontSize * 2.4, minMarkerOffsetX) : fontSize * 2.4;
-      if (parts.includes("right")) offsetX += isMarker ? Math.max(fontSize * 2.4, minMarkerOffsetX) : fontSize * 2.4;
-      if (parts.includes("above")) offsetY -= isMarker ? Math.max(fontSize * 1.25, minMarkerOffsetY) : fontSize * 1.25;
-      if (parts.includes("below")) offsetY += isMarker ? Math.max(fontSize * 1.25, minMarkerOffsetY) : fontSize * 1.25;
+      if (parts.includes("left")) offsetX -= isMarker ? minMarkerOffsetLeft : fontSize * 2.4;
+      if (parts.includes("right")) offsetX += isMarker ? minMarkerOffsetRight : fontSize * 2.4;
+      if (parts.includes("above")) offsetY -= isMarker ? minMarkerOffsetY : fontSize * 1.25;
+      if (parts.includes("below")) offsetY += isMarker ? minMarkerOffsetY : fontSize * 1.25;
     } else if (isMarker) {
       offsetY = minMarkerOffsetY;
     }
@@ -243,7 +297,7 @@
 
     const textAnchor = entry.align === "left" ? "start" : entry.align === "right" ? "end" : "middle";
     const curvedLines = [];
-    const lineHeight = fontSize * 1.8;
+    const lineHeight = fontSize * labelLineHeight;
     if (entry.labelCurvature) {
       const key = entry.key.replace(/[^a-z0-9]+/gi, "-");
       const curve = Math.max(-fontSize * 1.5, Math.min(fontSize * 1.5, entry.labelCurvature * 1200));
@@ -369,13 +423,19 @@
     }
   }
 
+  function focusLocation(entry) {
+    const zoom = locationZooms[entry.type] || locationZooms.feature;
+    setViewFromCenter({ x: entry.coords[0], y: entry.coords[1] }, zoom);
+    return showLocation(entry);
+  }
+
   async function showLocation(entry) {
     searchInput.value = entry.label || entry.title;
     locationPanel.replaceChildren();
     locationPanel.setAttribute("aria-busy", "true");
     const heading = document.createElement("p");
     heading.className = "eyebrow";
-    heading.textContent = entry.type ? `${entry.type} · Erran` : "Notes";
+    heading.textContent = entry.type || "Notes";
     const title = document.createElement("h2");
     title.textContent = entry.title;
     const content = document.createElement("div");
@@ -392,15 +452,17 @@
     try {
       const page = await window.CampaignContent.getEntry(entry.key);
       const [rendered, relatedEntries] = await Promise.all([
-        window.CampaignContent.getMarkdown(page),
+        window.CampaignContent.getMarkdown(page, { summaryOnly: true }),
         window.CampaignContent.getRelatedEntries(page)
       ]);
+      const parent = relatedEntries.find((candidate) => candidate.key === page.parent);
+      heading.textContent = [entry.type, parent?.title].filter(Boolean).join(" · ") || "Notes";
       if (rendered.trim()) {
         window.CampaignContent.renderBody(content, rendered, page);
       } else {
         const note = document.createElement("p");
         note.className = "panel-note";
-        note.textContent = "No written notes have been added to this place yet.";
+        note.textContent = "No summary has been added to this place yet.";
         content.append(note);
       }
       if (page.children.length) {
@@ -440,8 +502,12 @@
   }
 
   viewport.addEventListener("pointerdown", (event) => {
+    const isControl = event.target.closest(".map-tools, .location-panel, .map-zoom-level");
+    coordinateClick = showCoordinates && !isControl && pointers.size === 0 &&
+      event.pointerType === "mouse" && event.button === 0
+      ? { pointerId: event.pointerId, x: event.clientX, y: event.clientY } : null;
     if (event.target.closest(".map-tools") || event.target.closest(".map-label") ||
-        event.target.closest(".location-panel")) return;
+        event.target.closest(".location-panel") || event.target.closest(".map-zoom-level")) return;
     viewport.setPointerCapture(event.pointerId);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (pointers.size === 1) {
@@ -459,7 +525,18 @@
   });
 
   viewport.addEventListener("pointermove", (event) => {
-    if (!pointers.has(event.pointerId)) return;
+    if (coordinateClick && coordinateClick.pointerId === event.pointerId &&
+        Math.hypot(event.clientX - coordinateClick.x, event.clientY - coordinateClick.y) > 4) {
+      coordinateClick = null;
+    }
+    if (event.pointerType === "mouse") {
+      mousePosition = event.target.closest(".map-tools, .map-zoom-level, .location-panel")
+        ? null : { x: event.clientX, y: event.clientY };
+    }
+    if (!pointers.has(event.pointerId)) {
+      updateMapReadout();
+      return;
+    }
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (pointers.size === 1 && dragState) {
       view.x += event.clientX - dragState.x;
@@ -484,13 +561,34 @@
     }
   });
 
+  viewport.addEventListener("pointerleave", () => {
+    mousePosition = null;
+    updateMapReadout();
+  });
+
   function releasePointer(event) {
     pointers.delete(event.pointerId);
     dragState = pointers.size === 1 ? { ...[...pointers.values()][0] } : null;
     pinchState = null;
   }
-  viewport.addEventListener("pointerup", releasePointer);
-  viewport.addEventListener("pointercancel", releasePointer);
+  viewport.addEventListener("pointerup", (event) => {
+    if (coordinateClick && coordinateClick.pointerId === event.pointerId &&
+        Math.hypot(event.clientX - coordinateClick.x, event.clientY - coordinateClick.y) <= 4) {
+      const position = { x: event.clientX, y: event.clientY };
+      const coordinates = getMapCoordinates(position);
+      if (coordinates) {
+        mousePosition = position;
+        frozenCoordinates = frozenCoordinates ? null : coordinates;
+        updateMapReadout();
+      }
+    }
+    coordinateClick = null;
+    releasePointer(event);
+  });
+  viewport.addEventListener("pointercancel", (event) => {
+    coordinateClick = null;
+    releasePointer(event);
+  });
 
   viewport.addEventListener("wheel", (event) => {
     event.preventDefault();
@@ -541,12 +639,7 @@
       return;
     }
     status.hidden = true;
-    const bounds = viewport.getBoundingClientRect();
-    view.scale = fitScale * 4.5;
-    view.x = bounds.width / 2 - entry.coords[0] * view.width * view.scale;
-    view.y = bounds.height / 2 - entry.coords[1] * view.height * view.scale;
-    applyView();
-    showLocation(entry);
+    focusLocation(entry);
   });
   document.addEventListener("fullscreenchange", () => {
     const button = fullscreenButton;
@@ -588,11 +681,21 @@
         addLabel(entry);
       }
       initialized = true;
-      const savedView = loadSavedView();
-      if (savedView) {
-        setViewFromCenter(savedView.center, savedView.zoom);
+      const locationKey = new URLSearchParams(window.location.search).get("location");
+      const selectedEntry = mapEntries.find((entry) => entry.key === locationKey);
+      if (selectedEntry) {
+        await focusLocation(selectedEntry);
       } else {
-        fitMap();
+        const savedView = loadSavedView();
+        if (savedView) {
+          setViewFromCenter(savedView.center, savedView.zoom);
+        } else {
+          fitMap();
+        }
+        if (locationKey) {
+          status.classList.add("map-status-error");
+          status.textContent = "This location could not be found on the map. Choose a place from the map or search.";
+        }
       }
       if (!status.classList.contains("map-status-error")) status.hidden = true;
     } catch (error) {

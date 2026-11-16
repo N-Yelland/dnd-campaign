@@ -1,5 +1,5 @@
 ---
-title: R. Fastburne
+title: River Fastburne
 summary: ''
 order: 218
 map:

@@ -1,5 +1,5 @@
 ---
-title: Shathari Isl.
+title: Shathari Islands
 summary: ''
 order: 207
 map:

@@ -21,20 +21,12 @@ child_pages:
   - fairenfell.md
   - r-murnowline.md
   - lake-vossar.md
-  - belgonaz.md
-  - drayford.md
-  - fort-ashwood.md
   - fairenford.md
   - r-fairen.md
   - r-fairen-2.md
-  - r-dray.md
   - port-rallian.md
   - murnish-hills.md
   - pass-of-lights.md
-  - olor.md
-  - immarel.md
-  - pelaris.md
-  - astmon.md
-  - dreams.md
-  - groves.md
+  - sparrowhill.md
+  - spearhead-cliffs.md
 ---

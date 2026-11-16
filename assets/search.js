@@ -210,6 +210,7 @@
     if (!target) return;
     target.id = "search-match";
     target.setAttribute("tabindex", "-1");
+    if (window.ReadingPosition?.shouldRestore) return;
     if (window.location.hash && window.location.hash !== "#search-match") return;
     if (document.fonts) await document.fonts.ready;
     await new Promise((resolve) => window.requestAnimationFrame(resolve));

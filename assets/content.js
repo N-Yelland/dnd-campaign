@@ -4,6 +4,20 @@
     linkify: true,
     typographer: true
   });
+  // Recognize only these standalone comments; raw HTML remains disabled.
+  markdown.block.ruler.before("paragraph", "summary_marker", (state, startLine, endLine, silent) => {
+    if (state.level !== 0 || state.sCount[startLine] - state.blkIndent >= 4) return false;
+    const line = state.src.slice(state.bMarks[startLine] + state.tShift[startLine], state.eMarks[startLine]);
+    const match = line.match(/^<!--\s*(\/?)summary\s*-->\s*$/);
+    if (!match) return false;
+    if (silent) return true;
+    const token = state.push("summary_marker", "", 0);
+    token.meta = { closing: Boolean(match[1]) };
+    token.map = [startLine, startLine + 1];
+    state.line = startLine + 1;
+    return true;
+  }, { alt: ["paragraph", "reference"] });
+  markdown.renderer.rules.summary_marker = () => "";
   markdown.core.ruler.after("inline", "image_captions", (state) => {
     const result = [];
     for (let index = 0; index < state.tokens.length; index++) {
@@ -488,13 +502,23 @@
     return matches.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title) || a.key.localeCompare(b.key));
   }
 
-  async function getMarkdown(entry) {
+  function summaryTokens(tokens) {
+    const start = tokens.findIndex((token) => token.type === "summary_marker" && !token.meta.closing);
+    if (start >= 0) {
+      const end = tokens.findIndex((token, index) => index > start && token.type === "summary_marker" && token.meta.closing);
+      if (end >= 0) return tokens.slice(start + 1, end);
+    }
+    return tokens;
+  }
+
+  async function getMarkdown(entry, { summaryOnly = false } = {}) {
     if (entry.missing) {
       return markdown.render("This topic does not have an article yet. Browse its section or search the guide to find the places where it is mentioned.");
     }
     const [source, index] = await Promise.all([getSource(entry.file), getFileIndex()]);
     const env = { resolveArticle: (value) => resolveArticle(value, entry.file, index) };
-    const tokens = markdown.parse(markdownBody(parseFile(entry.file, source)), env);
+    const allTokens = markdown.parse(markdownBody(parseFile(entry.file, source)), env);
+    const tokens = summaryOnly ? summaryTokens(allTokens) : allTokens;
     const references = [];
     function visit(token, position, siblings) {
       if (token.type === "link_open") {

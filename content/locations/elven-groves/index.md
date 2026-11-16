@@ -1,5 +1,5 @@
 ---
-title: Groves
+title: The Elven Groves
 summary: ''
 order: 225
 map:
@@ -11,5 +11,11 @@ map:
   topText: The Elven
   labelCurvature: 0.002
   labelRotation: -10
+child_pages:
+  - astmon.md
+  - dreams.md
+  - immarel.md
+  - olor.md
+  - pelaris.md
 ---
 

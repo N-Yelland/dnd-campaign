@@ -31,6 +31,8 @@ The shared reader fetches Markdown and renders it in the browser with [markdown-
 
 Articles with two or more Markdown headings automatically show a **Contents** list. It sits in the left margin on wide screens and becomes an expandable panel above the article on smaller screens. Heading links support direct URLs and the current section is highlighted as you scroll. This is handled by `assets/contents.js`; no extra article metadata is needed.
 
+Article pages remember your reading position in the current browser tab across reloads, including automatic preview refreshes while editing. The position is restored after the Markdown renders, using the current section to account for edits above it. Late image and header loading is accounted for during the first five seconds; scrolling or interacting takes over immediately. Fresh article and section links still open normally. This is handled by `assets/reading-position.js`.
+
 Text on the lines directly beneath a standalone image becomes a caption, rendered as `<figure>` and `<figcaption>`. Captions support inline Markdown, including emphasis and article links. End the caption with a blank line; text separated from the image by a blank line remains an ordinary paragraph.
 
 Article images open in an enlarged overlay when clicked or activated with Enter, in both the reader and atlas notes. Close it with Escape, the Close button, or a click on the surrounding space. The overlay includes the caption and a link to the full-size original. Images already linked to a destination keep that link. This is handled by `assets/images.js`.
@@ -85,6 +87,16 @@ child_pages:
 
 Text after the header becomes the landing page's introduction; the reader renders `child_pages` as links below it. To add a subsection, create its folder and `index.md`, then add `new-subsection/` to the containing folder's `child_pages`. Each article belongs to its folder's `index.md`; a subsection index belongs to the index one directory above. Parent links, breadcrumbs, and section labels all follow this structure, with no `parent` attribute in YAML.
 
+To populate or refresh every index automatically, run this from the repository root with Node.js (no package installation needed):
+
+```sh
+node scripts/update-child-pages.cjs
+```
+
+The script makes each `child_pages` list exactly match the files (including images) and directories beside that `index.md`, excluding `index.md` itself. The filesystem determines membership: deleted or moved children are removed from their old index. It preserves the order of remaining entries, removes duplicates, and appends new entries alphabetically. Other front matter and article text stay intact. Indexes without front matter receive a header with a title derived from their folder name and a `child_pages` list; empty folders use `child_pages: []`. Create an `index.md` for each new folder first. The script validates all indexes before writing changes.
+
+Use `node scripts/update-child-pages.cjs --dry-run` to preview affected files without changing them, or `--check` to exit with status 1 if any lists need updating. The default content path is relative to the script, so it also works when launched from another directory; `--content-dir PATH` selects a different content tree. Run `node tests/update-child-pages.test.cjs` to check the script.
+
 ## Links between articles
 
 Use an article's filename without `.md` as the destination:
@@ -119,6 +131,24 @@ The town's description goes here.
 
 The metadata header is not rendered as part of the article. The `map` object supports `label`, `coords`, `type`, `topText`, `labelOffset`, `labelRotation`, `labelCurvature`, `spacing`, and `align`. Long map labels wrap automatically; include a backslash in a label to choose a line break manually. `topText` also prefixes the article title throughout the guide: `title: Tears` with `topText: Bay of` becomes **Bay of Tears**. A prefix already present in the title is not repeated; the atlas still renders `topText` and the main map label separately.
 
+Location articles with map coordinates show a **View on map** button beneath the title and tagline. It opens a shareable URL such as `map.html?location=locations%2Fvalley-of-lem%2Flembrow`, centers and zooms the map on that location, and opens its info box. Smaller location types open closer: regions keep a wide view, cities and towns zoom further in, and villages, landmarks, and ruins open closest. Map search uses the same zoom levels. A linked location takes priority over a previously saved map view.
+
+Mark the part of a location article to show in the map's info box with standalone comments:
+
+```markdown
+<!-- summary -->
+The town's short description goes here. It can span several paragraphs
+and include **formatting**, links, lists, or images.
+<!-- /summary -->
+
+## History
+The rest of the article goes here.
+```
+
+The map shows only the marked section, alongside the title and YAML `summary` tagline. The markers are invisible in the full article, which still displays all its content. Keep one pair of markers on their own lines, outside lists, blockquotes, and code blocks. Without a complete marker pair, the map shows the whole article. An **Open full article** link in the info box leads to the complete page. Lembrow's article includes an example.
+
 Run `node tests/content.test.cjs` to check directory coverage, article links, and atlas discovery without installing packages.
 Run `node tests/contents.test.cjs` to check the contents list, heading anchors, section highlighting, and responsive panel behavior.
 Run `node tests/theme.test.cjs` to check system preferences, saved themes, the header toggle, and storage fallbacks.
+Run `node tests/map-navigation.test.cjs` to check article map buttons, location links, selected previews, and saved-view behavior.
+Run `node tests/reading-position.test.cjs` to check scroll preservation across refreshes, late layout changes, and user navigation.

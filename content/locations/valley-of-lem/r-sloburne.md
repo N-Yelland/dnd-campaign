@@ -1,5 +1,5 @@
 ---
-title: R. Sloburne
+title: River Sloburne
 summary: ''
 order: 220
 map:

@@ -1,5 +1,5 @@
 ---
-title: Mt. Ereg
+title: Mount Ereg
 summary: ''
 order: 212
 map:

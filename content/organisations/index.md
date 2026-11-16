@@ -7,6 +7,7 @@ child_pages:
   - order-of-scarlet.md
   - klathrassian-bureaucracy.md
   - aldovian-academy.md
+  - guilds.md
 ---
 
 # The Organisations of Erran

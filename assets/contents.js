@@ -20,6 +20,7 @@
     }
 
     function openInitialSection() {
+      if (window.ReadingPosition?.shouldRestore) return;
       let id;
       try {
         id = decodeURIComponent(window.location.hash.slice(1));

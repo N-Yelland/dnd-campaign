@@ -232,6 +232,9 @@ button { font: inherit; }
 .article-header .eyebrow { margin-bottom: 0.65rem; }
 .article-header h1 { max-width: 780px; margin: 0 auto; font: clamp(2.2rem, 5vw, 3.7rem)/1.08 var(--small-caps); }
 .article-summary { max-width: 650px; margin: 1rem auto 0; color: var(--ink-soft); font-size: 1.25rem; font-style: italic; line-height: 1.45; }
+.article-map-link { margin-top: 1.2rem; color: var(--ink); background: var(--control-surface); border: 1px solid var(--gold); }
+.article-map-link:hover { color: var(--ink); background: var(--control-hover); }
+.article-map-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .prose { max-width: 690px; margin: 0 auto; font-size: 1.08rem; line-height: 1.82; }
 .prose, .panel-prose { font-family: var(--body-serif); }
 .prose :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 2rem; font-family: var(--small-caps); }
@@ -252,8 +255,8 @@ button { font: inherit; }
 :is(.prose, .panel-prose) figure { margin: 1.5rem auto; break-inside: avoid; }
 :is(.prose, .panel-prose) figure img { display: block; max-width: min(100%, 560px); height: auto; margin: 0 auto; }
 :is(.prose, .panel-prose) figcaption { max-width: 560px; margin: 0.65rem auto 0; color: var(--ink-soft); font-size: 0.86em; line-height: 1.55; text-align: center; overflow-wrap: anywhere; }
-.image-enlarge { display: inline-block; max-width: 100%; vertical-align: middle; cursor: zoom-in; }
-:is(.prose, .panel-prose) .image-enlarge img { max-width: min(100%, 560px); height: auto; margin: 0; }
+.image-enlarge { display: inline-block; max-width: min(100%, 560px); vertical-align: middle; cursor: zoom-in; }
+:is(.prose, .panel-prose) .image-enlarge img { display: block; max-width: min(100%, 560px); height: auto; margin: 0 auto; }
 :is(.prose, .panel-prose) figure > .image-enlarge, :is(.prose, .panel-prose) p > .image-enlarge:only-child { display: block; width: fit-content; margin: 0 auto; }
 .image-enlarge:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 .image-viewer-open { overflow: hidden; }
@@ -291,7 +294,7 @@ button { font: inherit; }
 .atlas-heading h1 { margin: 0; font: clamp(1.7rem, 3vw, 2.4rem) var(--small-caps); }
 .atlas-hint { margin: 0 0 0.35rem; color: var(--ink-soft); font-size: 0.91rem; }
 .atlas-actions { display: flex; align-items: end; gap: 1rem; }
-.location-search { display: flex; align-items: center; gap: 0.4rem; }
+.location-search { display: flex; align-items: flex-end; gap: 0.4rem; }
 .location-search label { display: grid; gap: 0.2rem; color: var(--ink-soft); font-size: 0.76rem; }
 .location-search input { width: clamp(145px, 20vw, 235px); min-height: 36px; padding: 0.4rem 0.55rem; color: var(--ink); background: var(--paper-bright); border: 1px solid var(--panel-border); border-radius: 0; font: 0.92rem var(--serif); }
 .location-search button { min-height: 36px; padding: 0.35rem 0.65rem; color: #f7f0e4; background: var(--chrome); border: 1px solid var(--gold); cursor: pointer; }
@@ -325,7 +328,9 @@ button { font: inherit; }
 .map-tools button:focus-visible { outline: 2px solid #b5884b; outline-offset: 2px; }
 .map-status { position: absolute; z-index: 3; inset: auto 1rem 1rem; width: fit-content; max-width: calc(100% - 2rem); margin: auto; padding: 0.65rem 0.9rem; color: var(--ink); background: var(--panel-surface); border: 1px solid var(--line); }
 .map-status-error { color: var(--missing-link); }
-.map-zoom-level { position: absolute; right: 0.7rem; bottom: 0.7rem; padding: 0.35rem 0.55rem; color: var(--ink); background: var(--panel-surface); font-size: 0.8rem; }
+.map-zoom-level { position: absolute; right: 0.7rem; bottom: 0.7rem; padding: 0.35rem 0.55rem; color: var(--ink); background: var(--panel-surface); border: 0; cursor: pointer; font-family: var(--body-serif); font-size: 0.8rem; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.map-zoom-level:hover { color: var(--red); background: var(--paper-bright); }
+.map-zoom-level:focus-visible { outline: 2px solid #b5884b; outline-offset: 2px; }
 .location-panel { min-width: 0; overflow: auto; padding: 1.4rem; background: var(--panel-surface); border: 1px solid var(--panel-border); }
 .panel-empty { display: grid; min-height: 100%; align-content: center; justify-items: center; text-align: center; }
 .panel-compass { color: var(--gold); font-size: 2.1rem; }

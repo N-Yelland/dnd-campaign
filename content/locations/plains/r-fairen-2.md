@@ -1,5 +1,5 @@
 ---
-title: R. Fairen
+title: Upper Fairen River
 summary: ''
 order: 215
 map:

@@ -47,6 +47,83 @@ function keyFromPath(file) {
 }
 
 const checks = [
+  ["atlas summaries render only the marked section while articles and search retain the full text", async () => {
+    const { api } = createRuntime({ overrides: {
+      "content/locations/valley-of-lem/lembrow.md": [
+        "---", "title: Lembrow", "---", "# Lembrow", "",
+        "Before the selected section.", "",
+        "<!-- summary -->", "## Visiting", "",
+        "A **fortified** town beside [the river][river] and [lemford].", "",
+        "* A busy market", "* A quiet inn", "",
+        "![Town](town.png)", "*The town at dawn.*",
+        "<!-- /summary -->", "",
+        "## History", "", "Hiddenchronicle belongs only in the full article.", "",
+        "[river]: r-lem"
+      ].join("\r\n")
+    } });
+    const entry = await api.getEntry("locations/valley-of-lem/lembrow");
+    const summary = await api.getMarkdown(entry, { summaryOnly: true });
+    assert.match(summary, /<h2>Visiting<\/h2>/);
+    assert.match(summary, /<strong>fortified<\/strong>/);
+    assert.match(summary, /page=locations%2Fvalley-of-lem%2Fr-lem/);
+    assert.match(summary, />Lemford<\/a>/);
+    assert.match(summary, /<ul>/);
+    assert.match(summary, /<figcaption><em>The town at dawn\.<\/em><\/figcaption>/);
+    assert.ok(!summary.includes("Before the selected section"));
+    assert.ok(!summary.includes("Hiddenchronicle"));
+    const full = await api.getMarkdown(entry);
+    assert.ok(full.includes("Before the selected section"));
+    assert.ok(full.includes("Hiddenchronicle"));
+    assert.ok(!full.includes("summary"), "Markers must not appear as escaped HTML in the article");
+    const results = await api.search("Hiddenchronicle");
+    assert.equal(results[0].key, entry.key);
+    assert.equal((await api.search("summary")).some((result) => result.key === entry.key), false);
+  }],
+  ["unmarked and incomplete summaries display the entire article in the atlas", async () => {
+    for (const marker of ["", "<!-- summary -->\n", "<!-- /summary -->\n"]) {
+      const { api } = createRuntime({ overrides: {
+        "content/locations/valley-of-lem/lembrow.md": `---\ntitle: Lembrow\n---\n# Lembrow\n\n${marker}## Overview\n\nFirst **paragraph**.\n\nSecond paragraph.\n\n## History\nLater details.`
+      } });
+      const entry = await api.getEntry("locations/valley-of-lem/lembrow");
+      const preview = await api.getMarkdown(entry, { summaryOnly: true });
+      assert.equal(preview, await api.getMarkdown(entry));
+      assert.match(preview, /<h2>Overview<\/h2>/);
+      assert.match(preview, /<p>First <strong>paragraph<\/strong>\.<\/p>/);
+      assert.match(preview, /<p>Second paragraph\.<\/p>/);
+      assert.match(preview, /<h2>History<\/h2>\s*<p>Later details\.<\/p>/);
+      assert.ok(!preview.includes("summary"));
+    }
+  }],
+  ["summary markers in code remain literal and other HTML stays escaped", async () => {
+    const { api } = createRuntime({ overrides: {
+      "content/locations/valley-of-lem/lembrow.md": [
+        "---", "title: Lembrow", "---", "",
+        "```markdown", "<!-- summary -->", "Code example", "<!-- /summary -->", "```", "",
+        "    <!-- summary -->", "    Indented example", "    <!-- /summary -->", "",
+        "<!-- summary -->", "Actual summary.", "<!-- /summary -->", "",
+        "<script>unsafe()</script>", "", "Other details."
+      ].join("\n")
+    } });
+    const entry = await api.getEntry("locations/valley-of-lem/lembrow");
+    const preview = await api.getMarkdown(entry, { summaryOnly: true });
+    assert.equal(preview.trim(), "<p>Actual summary.</p>");
+    const full = await api.getMarkdown(entry);
+    assert.match(full, /&lt;!-- summary --&gt;/);
+    assert.match(full, /&lt;script&gt;unsafe\(\)&lt;\/script&gt;/);
+    assert.ok(!full.includes("<script>"));
+  }],
+  ["empty summary sections stay empty and unmarked pages retain headings and lists", async () => {
+    for (const [body, expected] of [
+      ["<!-- summary -->\n<!-- /summary -->\n\nOther details.", ""],
+      ["## History\n\n* A list item", "<h2>History</h2>\n<ul>\n<li>A list item</li>\n</ul>\n"],
+      ["", ""]
+    ]) {
+      const { api } = createRuntime({ overrides: {
+        "content/locations/valley-of-lem/lembrow.md": `---\ntitle: Lembrow\n---\n${body}`
+      } });
+      assert.equal(await api.getMarkdown(await api.getEntry("locations/valley-of-lem/lembrow"), { summaryOnly: true }), expected);
+    }
+  }],
   ["every folder lists exactly its immediate children, and every article is reachable", async () => {
     const { api, requests } = createRuntime();
     const files = contentFiles();

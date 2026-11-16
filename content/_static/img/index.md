@@ -6,6 +6,8 @@ child_pages:
   - Ithikku.png
   - map_of_erran.jpg
   - map_of_erran.png
+  - great_burnton.png
+  - lembrow.png
 ---
 
 Open a map or illustration below.

@@ -44,6 +44,12 @@
     kicker.hidden = !parent;
     document.getElementById("article-title").textContent = entry.title;
 
+    if (entry.map && entry.key.startsWith("locations/")) {
+      const mapLink = document.getElementById("article-map-link");
+      mapLink.href = `map.html?location=${encodeURIComponent(entry.key)}`;
+      mapLink.hidden = false;
+    }
+
     const summary = document.getElementById("article-summary");
     if (entry.summary) {
       summary.textContent = entry.summary;
@@ -107,6 +113,7 @@
     status.hidden = true;
     window.ArticleContents.render(document.getElementById("article-body"));
     await window.CampaignSearch.highlightArticle(article, params);
+    await window.ReadingPosition?.restore(article);
   } catch (error) {
     status.classList.add("status-error");
     status.textContent = error.message;

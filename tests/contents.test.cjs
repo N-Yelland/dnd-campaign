@@ -22,7 +22,7 @@ class Element {
   scrollIntoView() { this.scrolled = true; }
 }
 
-function setup(sections, { wide = true, hash = "", existingIds = [] } = {}) {
+function setup(sections, { wide = true, hash = "", existingIds = [], restoring = false } = {}) {
   const headings = sections.map(([level, title]) => new Element(`h${level}`, title));
   const elements = {
     "article-contents": new Element("nav"),
@@ -41,6 +41,7 @@ function setup(sections, { wide = true, hash = "", existingIds = [] } = {}) {
     },
     window: {
       location: { hash },
+      ReadingPosition: { shouldRestore: restoring },
       matchMedia: (query) => {
         assert.equal(query, "(min-width: 1280px)");
         return media;
@@ -102,6 +103,10 @@ const checks = [
     const single = setup([[2, "Overview"]], { hash: "#section-overview" });
     assert.equal(single.headings[0].scrolled, true);
     assert.doesNotThrow(() => setup([[2, "Overview"], [2, "Origins"]], { hash: "#%broken" }));
+  }],
+  ["refresh restoration takes priority over the original section fragment", () => {
+    const view = setup([[2, "Overview"], [2, "Origins"]], { hash: "#section-origins", restoring: true });
+    assert.ok(view.headings.every((heading) => !heading.scrolled));
   }],
   ["scrolling highlights the current section and batches updates into one frame", () => {
     const view = setup([[2, "Overview"], [2, "Origins"], [3, "Details"]]);

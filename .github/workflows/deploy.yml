@@ -31,6 +31,8 @@ jobs:
           node tests/content.test.cjs
           node tests/contents.test.cjs
           node tests/theme.test.cjs
+          node tests/map-navigation.test.cjs
+          node tests/reading-position.test.cjs
 
       - name: Prepare static site
         run: |

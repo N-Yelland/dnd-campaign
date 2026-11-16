@@ -21,12 +21,9 @@ child_pages:
   - high-burnton.md
   - great-burnton.md
   - mullick.md
-  - mt-ereg.md
   - the-old-watchtower.md
   - r-lem.md
   - the-grimpeaks.md
-  - sparrowhill.md
-  - spearhead-cliffs.md
   - r-fastburne.md
   - millhold.md
   - r-sloburne.md
@@ -35,3 +32,4 @@ child_pages:
   - temple-of-the-ruby-chalice.md
   - the-erranite-mts.md
 ---
+

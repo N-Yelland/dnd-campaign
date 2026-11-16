@@ -1,5 +1,5 @@
 ---
-title: R. Dray
+title: River Dray
 summary: ''
 order: 216
 map:

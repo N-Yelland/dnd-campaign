@@ -18,4 +18,5 @@ child_pages:
   - pass-of-shadows.md
   - taluras.md
   - shathari-isl.md
+  - mt-ereg.md
 ---
