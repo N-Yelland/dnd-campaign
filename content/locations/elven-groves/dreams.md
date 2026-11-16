@@ -1,5 +1,5 @@
 ---
-title: The Gulf of Dreams
+title: Dreams
 summary: ''
 order: 224
 map:

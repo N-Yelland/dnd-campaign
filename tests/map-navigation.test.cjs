@@ -21,8 +21,27 @@ class Element {
       toggle: (name, enabled) => enabled ? classes.add(name) : classes.delete(name)
     };
   }
-  append(...children) { this.children.push(...children); }
-  replaceChildren(...children) { this.children = children; }
+  append(...children) {
+    for (const child of children) {
+      if (child.parentElement) {
+        child.parentElement.children = child.parentElement.children.filter((item) => item !== child);
+      }
+      child.parentElement = this;
+      this.children.push(child);
+    }
+  }
+  replaceChildren(...children) {
+    for (const child of this.children) child.parentElement = null;
+    this.children = [];
+    this.append(...children);
+  }
+  insertBefore(child, sibling) {
+    this.append(child);
+    if (!sibling) return;
+    this.children.pop();
+    this.children.splice(this.children.indexOf(sibling), 0, child);
+  }
+  focus() { this.focused = true; }
   setAttribute(name, value) { this.attributes[name] = value; }
   removeAttribute(name) { delete this.attributes[name]; }
   addEventListener(name, callback) { this.events[name] = callback; }
@@ -61,17 +80,30 @@ async function articleRuntime(entry) {
 async function mapRuntime({ search = "", type = "town", saved = null, labelEntry = {} } = {}) {
   const elements = Object.fromEntries([...read("map.html").matchAll(/id="([^"]+)"/g)]
     .map((match) => [match[1], new Element()]));
-  elements["location-panel"].parentElement = new Element();
+  const panelParent = new Element();
+  panelParent.append(elements["location-panel"]);
   Object.assign(elements["map-image"], { decode: async () => {}, naturalWidth: 2000, naturalHeight: 1000 });
   const entry = { ...location, type, ...labelEntry };
   let selected = null;
+  const documentEvents = {};
+  const mapFrame = new Element();
+  const document = {
+    getElementById: (id) => elements[id], createElement: (tag) => new Element(tag),
+    createElementNS: (namespace, tag) => new Element(tag),
+    querySelector: () => mapFrame, addEventListener: (name, callback) => { documentEvents[name] = callback; },
+    fullscreenEnabled: true, fullscreenElement: null,
+    exitFullscreen: async () => {
+      document.fullscreenElement = null;
+      documentEvents.fullscreenchange();
+    }
+  };
+  mapFrame.requestFullscreen = async () => {
+    document.fullscreenElement = mapFrame;
+    documentEvents.fullscreenchange();
+  };
   const context = vm.createContext({
     URLSearchParams,
-    document: {
-      getElementById: (id) => elements[id], createElement: (tag) => new Element(tag),
-      createElementNS: (namespace, tag) => new Element(tag),
-      querySelector: () => new Element(), addEventListener() {}
-    },
+    document,
     localStorage: { getItem: () => saved === null ? null : JSON.stringify(saved), setItem() {} },
     ResizeObserver: class { observe() {} },
     window: {
@@ -87,7 +119,7 @@ async function mapRuntime({ search = "", type = "town", saved = null, labelEntry
   });
   vm.runInContext(read("assets/map.js"), context);
   await new Promise(setImmediate);
-  return { elements, selected };
+  return { elements, selected, document, mapFrame, panelParent };
 }
 
 function mapCenter(elements) {
@@ -98,6 +130,45 @@ function mapCenter(elements) {
 }
 
 const checks = [
+  ["fullscreen location details can be closed and selecting a location reopens them", async () => {
+    const { elements, document, mapFrame } = await mapRuntime();
+    const panel = elements["location-panel"];
+    const close = elements["location-panel-close"];
+    const fullscreen = elements["map-fullscreen"];
+    await fullscreen.events.click();
+    assert.equal(document.fullscreenElement, mapFrame);
+    assert.equal(panel.parentElement, mapFrame);
+    close.events.click();
+    assert.equal(panel.hidden, true, "the initial empty panel can also be closed");
+    assert.equal(elements["map-viewport"].focused, true, "focus returns to the map");
+    assert.equal(document.fullscreenElement, mapFrame, "closing details keeps the map fullscreen");
+    const label = elements["map-labels"].children[0];
+    for (let attempt = 0; attempt < 2; attempt++) {
+      await label.events.click();
+      assert.equal(panel.hidden, false);
+      assert.equal(panel.children.filter((child) => child === close).length, 1,
+        "the close button survives replacement of the selected location's content");
+      close.events.click();
+      assert.equal(panel.hidden, true);
+    }
+  }],
+  ["leaving fullscreen restores a closed panel to the normal page layout", async () => {
+    const { elements, document, panelParent } = await mapRuntime({ search: `?location=${encodeURIComponent(location.key)}` });
+    const panel = elements["location-panel"];
+    const close = elements["location-panel-close"];
+    const fullscreen = elements["map-fullscreen"];
+    await fullscreen.events.click();
+    close.events.click();
+    assert.equal(panel.hidden, true);
+    await document.exitFullscreen();
+    assert.equal(panel.hidden, false);
+    assert.equal(panel.parentElement, panelParent);
+    assert.ok(panel.children.some((child) => child.textContent === location.title));
+    close.events.click();
+    assert.equal(panel.hidden, false, "the normal sidebar cannot be dismissed");
+    await fullscreen.events.click();
+    assert.equal(panel.hidden, false, "entering fullscreen again starts with visible details");
+  }],
   ["Great Burnton's multiline label uses normal text spacing", async () => {
     const { elements } = await mapRuntime({ labelEntry: {
       title: "Great Burnton", label: "Great Burnton", type: "town", labelOffset: "right"

@@ -187,7 +187,7 @@ const checks = [
     const { api } = createRuntime();
     for (const [key, expected] of [
       ["locations/plains/tears", "Bay of Tears"],
-      ["locations/plains/dreams", "Gulf of Dreams"],
+      ["locations/elven-groves/dreams", "Gulf of Dreams"],
       ["locations/plains/thosk", "Sea of Thosk"],
       ["locations/plains", "The Plains"]
     ]) {

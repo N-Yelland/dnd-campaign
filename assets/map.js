@@ -7,6 +7,7 @@
   const status = document.getElementById("map-status");
   const zoomLevel = document.getElementById("map-zoom-level");
   const locationPanel = document.getElementById("location-panel");
+  const panelClose = document.getElementById("location-panel-close");
   const searchForm = document.getElementById("location-search");
   const searchInput = document.getElementById("location-query");
   const searchOptions = document.getElementById("location-options");
@@ -430,6 +431,7 @@
   }
 
   async function showLocation(entry) {
+    locationPanel.hidden = false;
     searchInput.value = entry.label || entry.title;
     locationPanel.replaceChildren();
     locationPanel.setAttribute("aria-busy", "true");
@@ -447,7 +449,7 @@
       summary.textContent = entry.summary;
       locationPanel.append(summary);
     }
-    locationPanel.append(content);
+    locationPanel.append(content, panelClose);
 
     try {
       const page = await window.CampaignContent.getEntry(entry.key);
@@ -606,6 +608,11 @@
   document.getElementById("map-home").addEventListener("click", fitMap);
   const fullscreenButton = document.getElementById("map-fullscreen");
   const mapFrame = document.querySelector(".map-frame");
+  panelClose.addEventListener("click", () => {
+    if (document.fullscreenElement !== mapFrame) return;
+    locationPanel.hidden = true;
+    viewport.focus({ preventScroll: true });
+  });
   if (!document.fullscreenEnabled || typeof mapFrame.requestFullscreen !== "function") {
     fullscreenButton.disabled = true;
     fullscreenButton.title = "Fullscreen is not supported by this browser";
@@ -643,7 +650,8 @@
   });
   document.addEventListener("fullscreenchange", () => {
     const button = fullscreenButton;
-    const expanded = Boolean(document.fullscreenElement);
+    const expanded = document.fullscreenElement === mapFrame;
+    locationPanel.hidden = false;
     button.setAttribute("aria-label", expanded ? "Exit fullscreen" : "Enter fullscreen");
     button.title = expanded ? "Exit fullscreen" : "Enter fullscreen";
     if (expanded) {
